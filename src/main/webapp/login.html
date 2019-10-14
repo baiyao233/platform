@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link type="text/css" rel="stylesheet" href="css/login.css"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+<div class="login_body">
+    <div class="login_head">
+       <img src="img/login/logo.png">
+    </div>
+    <div class="login_form">
+        用户名：<br><input type="text" id="userCode" name="userCode" placeholder="请输入账号" class="login_input"><br>
+        密码：<br><input type="password" id="password" name="password" placeholder="请输入密码" class="login_input"><br>
+        <input type="button"  value="登录" onclick="login()" class="btn_login">
+        <input type="button"  value="注册" onclick="" class="btn_register">
+    </div>
+</div>
+</body>
+<script>
+    /**登录*/
+    function login() {
+        var userCode = $('#userCode').val();
+        var password = $('#password').val();
+        if (userCode == "" || password == "") {
+            alert("账号或者密码为空");
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/user/login.do",
+                data: {
+                    userCode: userCode,
+                    password: password
+                },
+                success: function (data) {
+                    if (data.status == 0) {
+                        $(location).attr('href', './index.html');
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                error: function () {
+                    alert("系统错误");
+                }
+            });
+        }
+    }
+
+</script>
+</html>

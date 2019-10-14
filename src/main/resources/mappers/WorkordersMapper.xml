@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.platform.dao.WorkordersMapper">
+  <resultMap id="BaseResultMap" type="com.example.platform.pojo.Workorders">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_status" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="appeal_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="appeal_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="appeal_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="organ_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="organ_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="result_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="refuse_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reserved1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reserved2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reserved3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reserved4" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reserved5" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_number, order_status, user_code, user_name, phone, sex, email, appeal_time, 
+    appeal_type, address, appeal_content, organ_id, organ_name, result_content, refuse_content, 
+    reserved1, reserved2, reserved3, reserved4, reserved5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_workorders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from platform_workorders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.platform.pojo.Workorders">
+    insert into platform_workorders (id, order_number, order_status, 
+      user_code, user_name, phone, 
+      sex, email, appeal_time, 
+      appeal_type, address, appeal_content, 
+      organ_id, organ_name, result_content, 
+      refuse_content, reserved1, reserved2, 
+      reserved3, reserved4, reserved5
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{appealTime,jdbcType=TIMESTAMP}, 
+      #{appealType,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{appealContent,jdbcType=VARCHAR}, 
+      #{organId,jdbcType=INTEGER}, #{organName,jdbcType=VARCHAR}, #{resultContent,jdbcType=VARCHAR}, 
+      #{refuseContent,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, 
+      #{reserved3,jdbcType=VARCHAR}, #{reserved4,jdbcType=VARCHAR}, #{reserved5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.platform.pojo.Workorders">
+    insert into platform_workorders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="appealTime != null">
+        appeal_time,
+      </if>
+      <if test="appealType != null">
+        appeal_type,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="appealContent != null">
+        appeal_content,
+      </if>
+      <if test="organId != null">
+        organ_id,
+      </if>
+      <if test="organName != null">
+        organ_name,
+      </if>
+      <if test="resultContent != null">
+        result_content,
+      </if>
+      <if test="refuseContent != null">
+        refuse_content,
+      </if>
+      <if test="reserved1 != null">
+        reserved1,
+      </if>
+      <if test="reserved2 != null">
+        reserved2,
+      </if>
+      <if test="reserved3 != null">
+        reserved3,
+      </if>
+      <if test="reserved4 != null">
+        reserved4,
+      </if>
+      <if test="reserved5 != null">
+        reserved5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="appealTime != null">
+        #{appealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appealType != null">
+        #{appealType,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="appealContent != null">
+        #{appealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="organId != null">
+        #{organId,jdbcType=INTEGER},
+      </if>
+      <if test="organName != null">
+        #{organName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultContent != null">
+        #{resultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="refuseContent != null">
+        #{refuseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null">
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null">
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null">
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved4 != null">
+        #{reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved5 != null">
+        #{reserved5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.platform.pojo.Workorders">
+    update platform_workorders
+    <set>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="appealTime != null">
+        appeal_time = #{appealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appealType != null">
+        appeal_type = #{appealType,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="appealContent != null">
+        appeal_content = #{appealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="organId != null">
+        organ_id = #{organId,jdbcType=INTEGER},
+      </if>
+      <if test="organName != null">
+        organ_name = #{organName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultContent != null">
+        result_content = #{resultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="refuseContent != null">
+        refuse_content = #{refuseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null">
+        reserved1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null">
+        reserved2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null">
+        reserved3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved4 != null">
+        reserved4 = #{reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved5 != null">
+        reserved5 = #{reserved5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.platform.pojo.Workorders">
+    update platform_workorders
+    set order_number = #{orderNumber,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      appeal_time = #{appealTime,jdbcType=TIMESTAMP},
+      appeal_type = #{appealType,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      appeal_content = #{appealContent,jdbcType=VARCHAR},
+      organ_id = #{organId,jdbcType=INTEGER},
+      organ_name = #{organName,jdbcType=VARCHAR},
+      result_content = #{resultContent,jdbcType=VARCHAR},
+      refuse_content = #{refuseContent,jdbcType=VARCHAR},
+      reserved1 = #{reserved1,jdbcType=VARCHAR},
+      reserved2 = #{reserved2,jdbcType=VARCHAR},
+      reserved3 = #{reserved3,jdbcType=VARCHAR},
+      reserved4 = #{reserved4,jdbcType=VARCHAR},
+      reserved5 = #{reserved5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

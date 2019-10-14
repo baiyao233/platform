@@ -1,0 +1,50 @@
+body{
+    background: url("../img/login/loginbj_png.jpg");
+}
+.login_body{
+    margin: 200px auto;
+    height: 300px;
+    width: 400px;
+    background: rgba(255,255,255,0.6);
+}
+.login_head{
+    width: 400px;
+    height: 50px;
+    margin: auto;
+}
+.login_head img{
+    width: 310px;
+    height: 50px;
+    margin-left: 45px;
+    margin-top: 20px;
+}
+.login_input{
+    width: 310px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-indent: 10px;
+}
+.login_form{
+    width: 400px;
+    height: 250px;
+    margin-left:45px;
+    margin-top: 30px;
+}
+.btn_login{
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    background: dodgerblue;
+    color: white;
+    border: 0px solid;
+}
+.btn_register{
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 110px;
+    background: #ff961c;
+    color: white;
+    border: 0px solid;
+}
