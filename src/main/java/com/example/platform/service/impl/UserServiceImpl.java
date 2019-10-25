@@ -84,12 +84,20 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 修改密码
-     * @param user
+     * @param userCode
+     * @param idNumber
+     * @param phone
+     * @param newPassword
      * @return
      */
     @Override
-    public ServerResponse<User> updatePassword(User user) {
-        return null;
+    public ServerResponse<User> updatePassword(String userCode,String idNumber,String phone,String newPassword) {
+        String md5Password = MD5Util.MD5EncodeUtf8(newPassword);
+        int resultCount = userMapper.updatePassword(userCode,idNumber,phone,md5Password);
+        if (resultCount > 0){
+            return ServerResponse.createBySuccessMessage("修改密码成功");
+        }
+        return ServerResponse.createByErrorMessage("修改密码失败");
     }
 
 
@@ -132,6 +140,7 @@ public class UserServiceImpl implements IUserService {
                     return ServerResponse.createByErrorMessage("该手机号已被注册");
                 }
             }
+
         } else {
             return ServerResponse.createByErrorMessage("参数错误");
         }

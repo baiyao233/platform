@@ -51,8 +51,8 @@ public class UserController {
         }
         return serverResponse;
     }
-
-    public ServerResponse<User> updatePassword(User user){
-        return null;
+    @RequestMapping(value = "update_password.do",method = RequestMethod.POST)
+    public ServerResponse<User> updatePassword(String userCode,String idNumber,String phone,String newPassword){
+        return iUserService.updatePassword(userCode,idNumber,phone,newPassword);
     }
 }

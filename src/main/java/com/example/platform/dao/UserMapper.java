@@ -2,6 +2,7 @@ package com.example.platform.dao;
 
 import com.example.platform.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
@@ -25,5 +26,7 @@ public interface UserMapper {
 
     int checkPhone(String phone);
 
-    User selectLogin(String userCode, String password);
+    int updatePassword(@Param("userCode")String userCode,@Param("idNumber")String idNumber,@Param("phone")String phone,@Param("newPassword")String newPassword);
+
+    User selectLogin(@Param("userCode") String userCode,@Param("password") String password);
 }

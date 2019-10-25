@@ -254,4 +254,13 @@
         where user_code = #{userCode}
         and password = #{password}
     </select>
+
+    <update id="updatePassword" parameterType="map">
+        update platform_user
+        set password = #{newPassword},
+        update_time = now()
+        where user_code = #{userCode}
+        and id_number = #{idNumber}
+        and phone = #{phone}
+    </update>
 </mapper>
