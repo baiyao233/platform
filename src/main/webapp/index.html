@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/xadmin.css">
     <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/xadmin.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
@@ -19,10 +20,56 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script>
-        // 是否开启刷新记忆tab功能
-        // var is_remember = false;
+        //是否开启刷新记忆tab功能
+        var is_remember = false;
     </script>
 </head>
+<script>
+    var role;
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/user/get_user_info.do",
+            xhrFields: {
+                withCredentials: true
+            },
+
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                if (res.status == 0) {
+                    var username = res.data.userName;
+                    document.getElementById("userName").innerText = username;
+                    role = res.data.role;
+                    if (role == 1) {
+                        $("#member").show();
+                        $("#admin").show();
+                    }
+                } else {
+                    alert(res.msg);
+                }
+            },
+            error: function () {
+                alert("系统错误");
+            }
+        });
+    });
+
+    function logout() {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/user/logout.do",
+
+            success: function () {
+                $(location).attr('href', './login.html');
+            },
+            error: function () {
+                alert("系统错误");
+            }
+        });
+    }
+</script>
 <body class="index">
 <!-- 顶部开始 -->
 <div class="container">
@@ -36,22 +83,31 @@
             <a href="javascript:;">+新增</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
-                <a onclick="xadmin.add_tab('在tab打开','member-list.html')">
+                <a onclick="xadmin.add_tab('在tab打开','./page/member/member-list.html')">
                     <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
                 <dd>
-                    <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">
+                    <a onclick="xadmin.add_tab('在tab打开刷新','./page/member/member-del.html',true)">
                         <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
             </dl>
         </li>
     </ul>
-
-    <div class="right_open">
-        <a><i title="退出登录" class="layui-icon">&#x1006;</i></a>
-    </div>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;">admin</a>
+            <a href="javascript:;" id="userName"></a>
+            <dl class="layui-nav-child">
+                <!-- 二级菜单 -->
+                <dd>
+                    <a onclick="xadmin.open('个人信息','./page/member/member-information.html')">个人信息</a>
+                </dd>
+                <dd>
+                    <a onclick="xadmin.open('修改密码','./page/member/member-updatePassword.html')">修改密码</a>
+                </dd>
+                <dd>
+                    <a onclick="logout()">退出</a>
+                </dd>
+            </dl>
         </li>
+
     </ul>
 </div>
 <!-- 顶部结束 -->
@@ -60,91 +116,70 @@
 <div class="left-nav">
     <div id="side-nav">
         <ul id="nav">
-            <li>
+            <li id="member" style="display: none">
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe6b8;</i>
-                    <cite>会员管理</cite>
+                    <cite>用户管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
-
                     <li>
-                        <a onclick="xadmin.add_tab('会员列表(静态表格)','member-list.html')">
+                        <a onclick="xadmin.add_tab('用户列表','./page/member/member-list3.html',true)">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表(静态表格)</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('会员列表(动态表格)','member-list1.html',true)">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表(动态表格)</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('会员删除','member-del.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员删除</cite></a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont">&#xe70b;</i>
-                            <cite>会员管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('会员删除','member-del.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员删除</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('等级管理','member-list1.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>等级管理</cite></a>
-                            </li>
-                        </ul>
+                            <cite>用户列表</cite></a>
                     </li>
                 </ul>
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="订单管理">&#xe723;</i>
+                    <i class="iconfont left-nav-li" lay-tips="工单管理">&#xe723;</i>
                     <cite>订单管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('订单列表','order-list.html')">
+                        <a onclick="xadmin.add_tab('新增工单','./page/order/order-add.html')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>新增工单</cite></a>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('订单列表','./page/order/order-list.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>订单列表</cite></a>
                     </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('订单列表1','order-list1.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>订单列表1</cite></a>
-                    </li>
                 </ul>
             </li>
+
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>
-                    <cite>管理员管理</cite>
+                    <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe699;</i>
+                    <cite>变量配置</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('管理员列表','admin-list.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>管理员列表</cite></a>
+                        <a href="javascript:;">
+                            <i class="iconfont">&#xe70b;</i>
+                            <cite>部门管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('部门列表','./page/organ/organ-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>部门列表</cite></a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('角色管理','admin-role.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>角色管理</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('权限分类','admin-cate.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限分类</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('权限管理','admin-rule.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限管理</cite></a>
+                        <a href="javascript:;">
+                            <i class="iconfont">&#xe70b;</i>
+                            <cite>角色管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('角色列表','./page/role/role-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>角色列表</cite></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
@@ -158,7 +193,9 @@
     <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
         <ul class="layui-tab-title">
             <li class="home">
-                <i class="layui-icon">&#xe68e;</i>我的桌面
+                <a href="#">
+                    <i class="layui-icon">&#xe68e;</i>我的桌面
+                </a>
             </li>
         </ul>
         <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">

@@ -11,6 +11,8 @@
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="id_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="organ_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="organ_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -22,15 +24,9 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    id, user_code, user_name, password, email, phone, id_number, sex, role, create_time, 
+    id, user_code, user_name, password, email, phone, id_number, sex, organ_id,organ_name,role, create_time,
     update_time, reserved1, reserved2, reserved3, reserved4, reserved5
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from platform_user
-        where id = #{id,jdbcType=INTEGER}
-    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from platform_user
     where id = #{id,jdbcType=INTEGER}
@@ -38,190 +34,17 @@
     <insert id="insert" parameterType="com.example.platform.pojo.User">
     insert into platform_user (id, user_code, user_name, 
       password, email, phone, 
-      id_number, sex, role, 
+      id_number, sex, organ_id,organ_name,role,
       create_time, update_time, reserved1, 
       reserved2, reserved3, reserved4, 
       reserved5)
     values (#{id,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{idNumber,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{role,jdbcType=INTEGER}, 
-      now(),now(), #{reserved1,jdbcType=VARCHAR},
+      #{idNumber,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},#{organId,jdbcType=INTEGER},#{organName,jdbcType=VARCHAR} ,
+      #{role,jdbcType=INTEGER},now(),now(), #{reserved1,jdbcType=VARCHAR},
       #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR}, #{reserved4,jdbcType=VARCHAR}, 
       #{reserved5,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.example.platform.pojo.User">
-        insert into platform_user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="userCode != null">
-                user_code,
-            </if>
-            <if test="userName != null">
-                user_name,
-            </if>
-            <if test="password != null">
-                password,
-            </if>
-            <if test="email != null">
-                email,
-            </if>
-            <if test="phone != null">
-                phone,
-            </if>
-            <if test="idNumber != null">
-                id_number,
-            </if>
-            <if test="sex != null">
-                sex,
-            </if>
-            <if test="role != null">
-                role,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-            <if test="reserved1 != null">
-                reserved1,
-            </if>
-            <if test="reserved2 != null">
-                reserved2,
-            </if>
-            <if test="reserved3 != null">
-                reserved3,
-            </if>
-            <if test="reserved4 != null">
-                reserved4,
-            </if>
-            <if test="reserved5 != null">
-                reserved5,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="userCode != null">
-                #{userCode,jdbcType=VARCHAR},
-            </if>
-            <if test="userName != null">
-                #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="idNumber != null">
-                #{idNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="role != null">
-                #{role,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                now()
-            </if>
-            <if test="updateTime != null">
-                now(),
-            </if>
-            <if test="reserved1 != null">
-                #{reserved1,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved2 != null">
-                #{reserved2,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved3 != null">
-                #{reserved3,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved4 != null">
-                #{reserved4,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved5 != null">
-                #{reserved5,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.example.platform.pojo.User">
-        update platform_user
-        <set>
-            <if test="userCode != null">
-                user_code = #{userCode,jdbcType=VARCHAR},
-            </if>
-            <if test="userName != null">
-                user_name = #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="idNumber != null">
-                id_number = #{idNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                sex = #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="role != null">
-                role = #{role,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                create_time = now(),
-            </if>
-            <if test="updateTime != null">
-                update_time = now(),
-            </if>
-            <if test="reserved1 != null">
-                reserved1 = #{reserved1,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved2 != null">
-                reserved2 = #{reserved2,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved3 != null">
-                reserved3 = #{reserved3,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved4 != null">
-                reserved4 = #{reserved4,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved5 != null">
-                reserved5 = #{reserved5,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.example.platform.pojo.User">
-    update platform_user
-    set user_code = #{userCode,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      id_number = #{idNumber,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      role = #{role,jdbcType=INTEGER},
-      create_time = now(),
-      update_time = now(),
-      reserved1 = #{reserved1,jdbcType=VARCHAR},
-      reserved2 = #{reserved2,jdbcType=VARCHAR},
-      reserved3 = #{reserved3,jdbcType=VARCHAR},
-      reserved4 = #{reserved4,jdbcType=VARCHAR},
-      reserved5 = #{reserved5,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 
     <select id="checkUserCode" resultType="int" parameterType="string">
         select count(1)
@@ -262,5 +85,43 @@
         where user_code = #{userCode}
         and id_number = #{idNumber}
         and phone = #{phone}
+    </update>
+    <select id="getUserCodeInfo" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from platform_user
+        where 1=1
+        and user_code = #{userCode}
+    </select>
+    <select id="getAllUserInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from platform_user
+        where 1=1
+        <if test="userName != null">
+            and user_name like concat('%',#{userName},'%')
+        </if>
+    </select>
+
+    <select id="getCountUser" resultType="int">
+        select count(1)
+        from platform_user
+        where 1=1
+        <if test="userName != null">
+            and user_name like concat('%',#{userName},'%')
+        </if>
+    </select>
+    <update id="updateInfo" parameterType="map">
+        update platform_user
+        <if test="userName != null">
+            set user_name = #{userName}
+        </if>
+        <if test="sex != null">
+            ,sex = #{sex}
+        </if>
+        <if test="role != null">
+            ,role = #{role}
+        </if>
+        where user_code = #{userCode}
     </update>
 </mapper>

@@ -64,7 +64,7 @@
     <div class="message">阳光便民-登录</div>
     <div id="darkbannerwrap"></div>
 
-    <div class="layui-form" >
+    <div class="layui-form">
         <form>
             <input name="userCode" placeholder="用户名" type="text" lay-verify="required" class="layui-input"
                    id="userCode" autocomplete="off">
@@ -95,15 +95,22 @@
                     userCode: userCode,
                     password: password
                 },
-                success: function (data) {
-                    if (data.status == 0) {
+                xhrFields: {
+                    withCredentials: true
+                },
+
+                crossDomain: true,
+
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 0) {
                         $(location).attr('href', './index.html');
                     } else {
-                        alert(data.msg);
+                        alert(res.msg);
                     }
                 },
                 error: function () {
-                    alert("系统错误");
+                    $(location).attr('href', './error.html');
                 }
             });
         }

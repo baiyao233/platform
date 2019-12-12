@@ -9,22 +9,114 @@
           content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/xadmin.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 </head>
+<script>
+    //页面加载调用
+    window.onload = function () {
+        //每1秒刷新时间
+        setInterval("NowTime()", 1000);
+    }
+
+    function NowTime() {
+        //获取年月日
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth();
+        var day = time.getDate();
+
+        //获取时分秒
+        var h = time.getHours();
+        var m = time.getMinutes();
+        var s = time.getSeconds();
+
+        //检查是否小于10
+        h = check(h);
+        m = check(m);
+        s = check(s);
+        document.getElementById("nowtime").innerHTML = year + "年" + month + "月" + day + "日  " + h + ":" + m + ":" + s;
+    }
+
+    //时间数字小于10，则在之前加个“0”补位。
+    function check(i) {
+        //方法一，用三元运算符
+        var num;
+        i < 10 ? num = "0" + i : num = i;
+        return num;
+
+        //方法二，if语句判断
+        //if(i<10){
+        //    i="0"+i;
+        //}
+        //return i;
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/user/get_user_info.do",
+            xhrFields: {
+                withCredentials: true
+            },
+
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                if (res.status == 0) {
+                    var username = res.data.userName;
+                    document.getElementById("userName").innerText = username;
+                } else {
+                    alert(res.msg);
+                }
+            },
+            error: function () {
+                alert("系统错误");
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/workorders/select_workorders.do",
+            xhrFields: {
+                withCredentials: true
+            },
+
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                if (res.status == 0) {
+                    var all_count = res.count;
+                    document.getElementById("all_count").innerText = all_count;
+                } else {
+                    alert(res.msg);
+                }
+            },
+            error: function () {
+                alert("系统错误");
+            }
+        });
+        $(document).on('click', '#all_count_btn', function () {
+            xadmin.add_tab('订单列表', './page/order/order-list.html')
+        });
+    });
+</script>
 <body>
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <blockquote class="layui-elem-quote">欢迎管理员：
-                        <span class="x-red">test</span>！当前时间:2018-04-25 20:50:53
+                    <blockquote class="layui-elem-quote">欢迎：
+                        <span class="x-red" id="userName"></span>！当前时间:<span id="nowtime"></span>
                     </blockquote>
                 </div>
             </div>
@@ -33,54 +125,23 @@
             <div class="layui-card">
                 <div class="layui-card-header">数据统计</div>
                 <div class="layui-card-body ">
-                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"
+                        style="text-align: center">
                         <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>文章数</h3>
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>工单总数</h3>
                                 <p>
-                                    <cite>66</cite></p>
+                                    <cite id="all_count">0</cite></p>
                             </a>
                         </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>会员数</h3>
-                                <p>
-                                    <cite>12</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>回复数</h3>
-                                <p>
-                                    <cite>99</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>商品数</h3>
-                                <p>
-                                    <cite>67</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>文章数</h3>
-                                <p>
-                                    <cite>67</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6 ">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>文章数</h3>
-                                <p>
-                                    <cite>6766</cite></p>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 </body>
+
 </html>

@@ -13,6 +13,8 @@ public class Workorders {
 
     private String userName;
 
+    private String idNumber;
+
     private String phone;
 
     private String sex;
@@ -33,7 +35,11 @@ public class Workorders {
 
     private String resultContent;
 
+    private Date resultTime;
+
     private String refuseContent;
+
+    private Date refuseTime;
 
     private String reserved1;
 
@@ -45,12 +51,17 @@ public class Workorders {
 
     private String reserved5;
 
-    public Workorders(Integer id, String orderNumber, String orderStatus, String userCode, String userName, String phone, String sex, String email, Date appealTime, String appealType, String address, String appealContent, Integer organId, String organName, String resultContent, String refuseContent, String reserved1, String reserved2, String reserved3, String reserved4, String reserved5) {
+    private String startTime;
+
+    private String endTime;
+
+    public Workorders(Integer id, String orderNumber, String orderStatus, String userCode, String userName, String idNumber, String phone, String sex, String email, Date appealTime, String appealType, String address, String appealContent, Integer organId, String organName, String resultContent, Date resultTime, String refuseContent, Date refuseTime, String reserved1, String reserved2, String reserved3, String reserved4, String reserved5) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.orderStatus = orderStatus;
         this.userCode = userCode;
         this.userName = userName;
+        this.idNumber = idNumber;
         this.phone = phone;
         this.sex = sex;
         this.email = email;
@@ -61,7 +72,9 @@ public class Workorders {
         this.organId = organId;
         this.organName = organName;
         this.resultContent = resultContent;
+        this.resultTime = resultTime;
         this.refuseContent = refuseContent;
+        this.refuseTime = refuseTime;
         this.reserved1 = reserved1;
         this.reserved2 = reserved2;
         this.reserved3 = reserved3;
@@ -111,6 +124,14 @@ public class Workorders {
 
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber == null ? null : idNumber.trim();
     }
 
     public String getPhone() {
@@ -193,12 +214,28 @@ public class Workorders {
         this.resultContent = resultContent == null ? null : resultContent.trim();
     }
 
+    public Date getResultTime() {
+        return resultTime;
+    }
+
+    public void setResultTime(Date resultTime) {
+        this.resultTime = resultTime;
+    }
+
     public String getRefuseContent() {
         return refuseContent;
     }
 
     public void setRefuseContent(String refuseContent) {
         this.refuseContent = refuseContent == null ? null : refuseContent.trim();
+    }
+
+    public Date getRefuseTime() {
+        return refuseTime;
+    }
+
+    public void setRefuseTime(Date refuseTime) {
+        this.refuseTime = refuseTime;
     }
 
     public String getReserved1() {
@@ -239,5 +276,21 @@ public class Workorders {
 
     public void setReserved5(String reserved5) {
         this.reserved5 = reserved5 == null ? null : reserved5.trim();
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

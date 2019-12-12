@@ -19,6 +19,17 @@ public class User {
 
     private Integer sex;
 
+    private Integer organId;
+
+    private String organName;
+    /**
+     * 用户权限
+     * 0-	普通用户
+     * 1-	管理员
+     * 2-	后台组长
+     * 3-	二级部门
+     * 4-	三级部门
+     */
     private Integer role;
 
     private Date createTime;
@@ -35,7 +46,7 @@ public class User {
 
     private String reserved5;
 
-    public User(Integer id, String userCode, String userName, String password, String email, String phone, String idNumber, Integer sex, Integer role, Date createTime, Date updateTime, String reserved1, String reserved2, String reserved3, String reserved4, String reserved5) {
+    public User(Integer id, String userCode, String userName, String password, String email, String phone, String idNumber, Integer sex, Integer organId,String organName,Integer role, Date createTime, Date updateTime, String reserved1, String reserved2, String reserved3, String reserved4, String reserved5) {
         this.id = id;
         this.userCode = userCode;
         this.userName = userName;
@@ -44,6 +55,8 @@ public class User {
         this.phone = phone;
         this.idNumber = idNumber;
         this.sex = sex;
+        this.organId = organId;
+        this.organName = organName;
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -122,10 +135,42 @@ public class User {
         this.sex = sex;
     }
 
+    public Integer getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
+    }
+
+    public String getOrganName() {
+        return organName;
+    }
+
+    public void setOrganName(String organName) {
+        this.organName = organName;
+    }
+
+    /**
+     * 获取用户权限
+     * 0-	普通用户
+     * 1-	管理员
+     * 2-	后台组长
+     * 3-	二级部门
+     * 4-	三级部门
+     */
     public Integer getRole() {
         return role;
     }
 
+    /**
+     * 设置用户权限
+     * 0-	普通用户
+     * 1-	管理员
+     * 2-	后台组长
+     * 3-	二级部门
+     * 4-	三级部门
+     */
     public void setRole(Integer role) {
         this.role = role;
     }

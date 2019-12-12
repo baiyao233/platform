@@ -17,6 +17,7 @@ public class ServerResponse<T> implements Serializable {
     private int status;
     private String msg;
     private T data;
+    private int count;
 
     private ServerResponse(int status) {
         this.status = status;
@@ -36,6 +37,17 @@ public class ServerResponse<T> implements Serializable {
     private ServerResponse(int status, String msg) {
         this.status = status;
         this.msg = msg;
+    }
+
+    private ServerResponse(int status, String msg, int count, T data) {
+        this.status = status;
+        this.msg = msg;
+        this.count = count;
+        this.data = data;
+    }
+
+    private ServerResponse(T data){
+        this.data = data;
     }
 
     @JsonIgnore
@@ -58,6 +70,11 @@ public class ServerResponse<T> implements Serializable {
         return msg;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+
     public static <T> ServerResponse<T> createBySuccess() {
         return new ServerResponse<T>(ResponseCode.SUCCESS.getCode());
 
@@ -76,6 +93,10 @@ public class ServerResponse<T> implements Serializable {
 
     }
 
+    public static <T> ServerResponse<T> createByCountSuccess(String msg,int count,T data){
+        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),msg,count,data);
+    }
+
     public static <T> ServerResponse<T> createByError() {
         return new ServerResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
 
@@ -89,5 +110,8 @@ public class ServerResponse<T> implements Serializable {
     public static <T> ServerResponse<T> createByErrorCodeMessage(int errorCode, String errorMessage) {
         return new ServerResponse<T>(errorCode, errorMessage);
 
+    }
+    public static <T> ServerResponse<T> createOnlyDataSuccess(T data){
+        return new ServerResponse<T>(data);
     }
 }
