@@ -2,7 +2,9 @@ package com.example.platform.dao;
 
 import com.example.platform.pojo.Workorders;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -16,4 +18,8 @@ public interface WorkordersMapper {
     List<Workorders> selectWorkorders (Workorders workorders);
 
     int workordersCount(Workorders workorders);
+
+    int updateModify(@Param("id") Integer id, @Param("orderStatus") String orderStatus, @Param("modifyContent") String modifyContent, @Param("lastTime") Date lastTime);
+
+    int assign(Workorders workorders);
 }

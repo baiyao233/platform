@@ -107,6 +107,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 根据userCode查询用户信息
+     *
      * @param userCode
      * @return
      */
@@ -115,7 +116,7 @@ public class UserServiceImpl implements IUserService {
         User user = userMapper.getUserCodeInfo(userCode);
         if (user != null && !"".equals(user)) {
             return ServerResponse.createBySuccess(user);
-        }else {
+        } else {
             return ServerResponse.createByErrorMessage("未找到该账号");
         }
     }
@@ -196,15 +197,14 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 更新用户名，性别，角色
-     * @param userName
-     * @param sex
-     * @param role
+     *
+     * @param user
      * @return
      */
     @Override
-    public ServerResponse<User> updateInfo(String userName, int sex, int role,String userCode) {
-        int resultCount = userMapper.updateInfo(userName,sex,role,userCode);
-        if (resultCount > 0){
+    public ServerResponse<User> updateInfo(User user) {
+        int resultCount = userMapper.updateInfo(user);
+        if (resultCount > 0) {
             return ServerResponse.createBySuccessMessage("修改成功");
         }
         return ServerResponse.createByErrorMessage("参数出错");
@@ -212,13 +212,14 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
     @Override
     public ServerResponse deleteByPrimaryKey(int id) {
         int resultCount = userMapper.deleteByPrimaryKey(id);
-        if (resultCount>0){
+        if (resultCount > 0) {
             return ServerResponse.createBySuccessMessage("删除成功");
         }
         return ServerResponse.createByErrorMessage("系统错误");

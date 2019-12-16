@@ -30,5 +30,5 @@ public interface UserMapper {
 
     int getCountUser(@Param("userName") String userName);
 
-    int updateInfo(@Param("userName") String userName, @Param("sex") int sex, @Param("role") int role, @Param("userCode") String userCode);
+    int updateInfo(User user);
 }

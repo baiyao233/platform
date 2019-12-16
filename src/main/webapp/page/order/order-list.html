@@ -140,28 +140,28 @@
             elem: '#createTime2'
             , type: 'datetime'
         });
-        // jQuery.ajax({
-        //     type: "POST",
-        //     url: "http://localhost:8080/user/get_user_info.do",
-        //     xhrFields: {
-        //         withCredentials: true
-        //     },
-        //
-        //     crossDomain: true,
-        //
-        //     dataType: "json",
-        //     success: function (res) {
-        //         if (res.status == 0) {
-        //             userCode = res.data.userCode;
-        //             document.getElementById("userCode").value = userCode;
-        //         } else {
-        //             alert(res.msg);
-        //         }
-        //     },
-        //     error: function () {
-        //         alert("系统错误");
-        //     }
-        // });
+        jQuery.ajax({
+            type: "POST",
+            url: "http://localhost:8080/user/get_user_info.do",
+            xhrFields: {
+                withCredentials: true
+            },
+
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                if (res.status == 0) {
+                    userCode = res.data.userCode;
+                    document.getElementById("userCode").value = userCode;
+                } else {
+                    alert(res.msg);
+                }
+            },
+            error: function () {
+                alert("系统错误");
+            }
+        });
         table.render({
             elem: '#test'
             , url: "http://localhost:8080/workorders/select_workorders.do"
@@ -185,8 +185,8 @@
             //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 {
                     layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'] //自定义分页布局
-                    , limits: [10, 5, 20, 40, 80]
-                    , limit: 10
+                    , limits: [10, 8, 20, 40, 80]
+                    , limit: 8
                     , count: "count"
                 }
             , groups: 10
@@ -203,6 +203,9 @@
             , id: 'workordersReload'
             , cellMinWidth: 80
             // , skin:'row'
+            ,where:{
+                userCode:userCode
+            }
             , cols:
                 [[
                     {type: 'checkbox',}
@@ -220,17 +223,17 @@
                         field: 'orderStatus', title: '工单状态', unresize: true, sort: true, width: 100,
                         templet: function (res) {
                             if (res.orderStatus == 0) {
-                                return "<span style=\"color:#c00;\">待审核</span>";
+                                return "<span style=\"color:#FF8C00;\">待审核</span>";
                             } else if (res.orderStatus == 1) {
-                                return "待签收";
+                                return "<span style=\"color:#0000FF;\">待签收</span>";
                             } else if (res.orderStatus == 2) {
-                                return "处理中";
+                                return "<span style=\"color:#A9A9A9;\">处理中</span>";
                             } else if (res.orderStatus == 3) {
-                                return "部门拒绝";
+                                return "<span style=\"color:#FF69B4;\">部门拒绝</span>";
                             } else if (res.orderStatus == 4) {
-                                return "已结案";
+                                return "<span style=\"color:#228B22;\">已结案</span>";
                             } else if (res.orderStatus == 5) {
-                                return "退回修改";
+                                return "<span style=\"color:#c00;\">退回修改</span>";
                             }
                         }
                     }
@@ -267,7 +270,9 @@
                 var userCode = $('#userCode');
                 var appealContent = $('#appealContent');
                 table.reload('workordersReload', {
-                    page: true,
+                    page: {
+                        curr:1
+                    },
                     where: {
                         orderNumber: orderNumber.val(),
                         appealType: appealType,

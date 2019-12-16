@@ -47,11 +47,11 @@
                         $("#admin").show();
                     }
                 } else {
-                    alert(res.msg);
+                    $(location).attr('href', './login.html');
                 }
             },
             error: function () {
-                alert("系统错误");
+                $(location).attr('href', './login.html');
             }
         });
     });
@@ -65,7 +65,7 @@
                 $(location).attr('href', './login.html');
             },
             error: function () {
-                alert("系统错误");
+                $(location).attr('href', './login.html');
             }
         });
     }
@@ -132,7 +132,7 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="工单管理">&#xe723;</i>
-                    <cite>订单管理</cite>
+                    <cite>工单管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
@@ -144,7 +144,7 @@
                     <li>
                         <a onclick="xadmin.add_tab('订单列表','./page/order/order-list.html')">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>订单列表</cite></a>
+                            <cite>工单查询</cite></a>
                     </li>
                 </ul>
             </li>

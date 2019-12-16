@@ -18,4 +18,7 @@ public interface IWorkordersService {
 
     ServerResponse getWorkordersById(int id);
 
+    ServerResponse updateModify(int id,String modifyContent);
+
+    ServerResponse assign(Workorders workorders);
 }

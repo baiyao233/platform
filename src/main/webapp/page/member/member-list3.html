@@ -36,7 +36,7 @@
     <form action="" method="post" class="layui-form layui-form-pane" id="search_form">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
-                工单号
+                用户名
             </label>
             <div class="layui-inline layui-show-xs-block">
                 <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
@@ -96,8 +96,8 @@
             //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 {
                     layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'] //自定义分页布局
-                    , limits: [10, 5, 20, 40, 80]
-                    , limit: 10
+                    , limits: [10, 8, 20, 40, 80]
+                    , limit: 8
                     , count: "count"
                 }
             , groups: 10
@@ -120,31 +120,31 @@
                     , {field: 'userCode', title: '账号', width: 150}
                     , {field: 'userName', title: '用户名', width: 150}
                     , {
-                        field: 'email', title: '邮箱', width: 150,
+                        field: 'email', title: '邮箱', width: 200,
                         templet: function (res) {
                             return '<em>' + res.email + '</em>'
                         }
                     }
                     , {field: 'phone', title: '手机号', width: 150}
-                    , {field: 'idNumber', title: '身份证号', width: 150}
-                    , {
-                        field: 'role', title: '角色', width: 124,
-                        templet: function (res) {
-                            if (res.role == 0) {
-                                return "普通用户";
-                            } else if (res.role == 1) {
-                                return "管理员";
-                            } else if (res.role == 2) {
-                                return "后台组长";
-                            } else if (res.role == 3) {
-                                return "二级部门";
-                            } else if (res.role == 4) {
-                                return "三级部门";
-                            } else {
-                                return "";
-                            }
-                        }
-                    }
+                    , {field: 'idNumber', title: '身份证号', width: 200}
+                    // , {
+                    //     field: 'role', title: '角色', width: 124,
+                    //     templet: function (res) {
+                    //         if (res.role == 0) {
+                    //             return "普通用户";
+                    //         } else if (res.role == 1) {
+                    //             return "管理员";
+                    //         } else if (res.role == 2) {
+                    //             return "后台组长";
+                    //         } else if (res.role == 3) {
+                    //             return "二级部门";
+                    //         } else if (res.role == 4) {
+                    //             return "三级部门";
+                    //         } else {
+                    //             return "";
+                    //         }
+                    //     }
+                    // }
                     , {
                         field: 'sex', title: '性别', sort: true, width: 100,
                         templet: function (res) {
@@ -248,7 +248,7 @@
                 });
             } else if (obj.event === 'edit') {
                 var url = "member-edit.html?userCode=" + data.userCode;
-                xadmin.open('编辑', url, 700, 500);
+                xadmin.open('编辑', url, 800, 600);
                 // layer.prompt({
                 //     formType: 2
                 //     , value: data.email

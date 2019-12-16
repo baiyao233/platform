@@ -22,6 +22,9 @@
             <arg column="result_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="refuse_content" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="refuse_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="sign_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="last_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="modify_content" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="reserved1" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="reserved2" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="reserved3" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -32,7 +35,7 @@
     <sql id="Base_Column_List">
     id, order_number, order_status, user_code, user_name, id_number, phone, sex, email, 
     appeal_time, appeal_type, address, appeal_content, organ_id, organ_name, result_content, 
-    result_time, refuse_content, refuse_time, reserved1, reserved2, reserved3, reserved4, 
+    result_time, refuse_content, refuse_time,sign_time,last_time,modify_content,reserved1, reserved2, reserved3, reserved4,
     reserved5
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -52,7 +55,7 @@
       appeal_time, appeal_type, address, 
       appeal_content, organ_id, organ_name, 
       result_content, result_time, refuse_content, 
-      refuse_time, reserved1, reserved2, 
+      refuse_time,modify_content ,reserved1, reserved2,
       reserved3, reserved4, reserved5
       )
     values (#{id,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
@@ -61,263 +64,10 @@
       #{appealTime,jdbcType=TIMESTAMP}, #{appealType,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{appealContent,jdbcType=VARCHAR}, #{organId,jdbcType=INTEGER}, #{organName,jdbcType=VARCHAR}, 
       #{resultContent,jdbcType=VARCHAR}, #{resultTime,jdbcType=TIMESTAMP}, #{refuseContent,jdbcType=VARCHAR}, 
-      #{refuseTime,jdbcType=TIMESTAMP}, #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, 
+      #{refuseTime,jdbcType=TIMESTAMP}, #{modifyContent,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR},
       #{reserved3,jdbcType=VARCHAR}, #{reserved4,jdbcType=VARCHAR}, #{reserved5,jdbcType=VARCHAR}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.example.platform.pojo.Workorders">
-        insert into platform_workorders
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderNumber != null">
-                order_number,
-            </if>
-            <if test="orderStatus != null">
-                order_status,
-            </if>
-            <if test="userCode != null">
-                user_code,
-            </if>
-            <if test="userName != null">
-                user_name,
-            </if>
-            <if test="idNumber != null">
-                id_number,
-            </if>
-            <if test="phone != null">
-                phone,
-            </if>
-            <if test="sex != null">
-                sex,
-            </if>
-            <if test="email != null">
-                email,
-            </if>
-            <if test="appealTime != null">
-                appeal_time,
-            </if>
-            <if test="appealType != null">
-                appeal_type,
-            </if>
-            <if test="address != null">
-                address,
-            </if>
-            <if test="appealContent != null">
-                appeal_content,
-            </if>
-            <if test="organId != null">
-                organ_id,
-            </if>
-            <if test="organName != null">
-                organ_name,
-            </if>
-            <if test="resultContent != null">
-                result_content,
-            </if>
-            <if test="resultTime != null">
-                result_time,
-            </if>
-            <if test="refuseContent != null">
-                refuse_content,
-            </if>
-            <if test="refuseTime != null">
-                refuse_time,
-            </if>
-            <if test="reserved1 != null">
-                reserved1,
-            </if>
-            <if test="reserved2 != null">
-                reserved2,
-            </if>
-            <if test="reserved3 != null">
-                reserved3,
-            </if>
-            <if test="reserved4 != null">
-                reserved4,
-            </if>
-            <if test="reserved5 != null">
-                reserved5,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="orderNumber != null">
-                #{orderNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="orderStatus != null">
-                #{orderStatus,jdbcType=VARCHAR},
-            </if>
-            <if test="userCode != null">
-                #{userCode,jdbcType=VARCHAR},
-            </if>
-            <if test="userName != null">
-                #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="idNumber != null">
-                #{idNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                #{sex,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="appealTime != null">
-                #{appealTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="appealType != null">
-                #{appealType,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="appealContent != null">
-                #{appealContent,jdbcType=VARCHAR},
-            </if>
-            <if test="organId != null">
-                #{organId,jdbcType=INTEGER},
-            </if>
-            <if test="organName != null">
-                #{organName,jdbcType=VARCHAR},
-            </if>
-            <if test="resultContent != null">
-                #{resultContent,jdbcType=VARCHAR},
-            </if>
-            <if test="resultTime != null">
-                #{resultTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="refuseContent != null">
-                #{refuseContent,jdbcType=VARCHAR},
-            </if>
-            <if test="refuseTime != null">
-                #{refuseTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="reserved1 != null">
-                #{reserved1,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved2 != null">
-                #{reserved2,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved3 != null">
-                #{reserved3,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved4 != null">
-                #{reserved4,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved5 != null">
-                #{reserved5,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.example.platform.pojo.Workorders">
-        update platform_workorders
-        <set>
-            <if test="orderNumber != null">
-                order_number = #{orderNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="orderStatus != null">
-                order_status = #{orderStatus,jdbcType=VARCHAR},
-            </if>
-            <if test="userCode != null">
-                user_code = #{userCode,jdbcType=VARCHAR},
-            </if>
-            <if test="userName != null">
-                user_name = #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="idNumber != null">
-                id_number = #{idNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                sex = #{sex,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="appealTime != null">
-                appeal_time = #{appealTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="appealType != null">
-                appeal_type = #{appealType,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="appealContent != null">
-                appeal_content = #{appealContent,jdbcType=VARCHAR},
-            </if>
-            <if test="organId != null">
-                organ_id = #{organId,jdbcType=INTEGER},
-            </if>
-            <if test="organName != null">
-                organ_name = #{organName,jdbcType=VARCHAR},
-            </if>
-            <if test="resultContent != null">
-                result_content = #{resultContent,jdbcType=VARCHAR},
-            </if>
-            <if test="resultTime != null">
-                result_time = #{resultTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="refuseContent != null">
-                refuse_content = #{refuseContent,jdbcType=VARCHAR},
-            </if>
-            <if test="refuseTime != null">
-                refuse_time = #{refuseTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="reserved1 != null">
-                reserved1 = #{reserved1,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved2 != null">
-                reserved2 = #{reserved2,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved3 != null">
-                reserved3 = #{reserved3,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved4 != null">
-                reserved4 = #{reserved4,jdbcType=VARCHAR},
-            </if>
-            <if test="reserved5 != null">
-                reserved5 = #{reserved5,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.example.platform.pojo.Workorders">
-    update platform_workorders
-    set order_number = #{orderNumber,jdbcType=VARCHAR},
-      order_status = #{orderStatus,jdbcType=VARCHAR},
-      user_code = #{userCode,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      id_number = #{idNumber,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      appeal_time = #{appealTime,jdbcType=TIMESTAMP},
-      appeal_type = #{appealType,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      appeal_content = #{appealContent,jdbcType=VARCHAR},
-      organ_id = #{organId,jdbcType=INTEGER},
-      organ_name = #{organName,jdbcType=VARCHAR},
-      result_content = #{resultContent,jdbcType=VARCHAR},
-      result_time = #{resultTime,jdbcType=TIMESTAMP},
-      refuse_content = #{refuseContent,jdbcType=VARCHAR},
-      refuse_time = #{refuseTime,jdbcType=TIMESTAMP},
-      reserved1 = #{reserved1,jdbcType=VARCHAR},
-      reserved2 = #{reserved2,jdbcType=VARCHAR},
-      reserved3 = #{reserved3,jdbcType=VARCHAR},
-      reserved4 = #{reserved4,jdbcType=VARCHAR},
-      reserved5 = #{reserved5,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
     <select id="selectWorkorders" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
@@ -384,4 +134,41 @@
             and appeal_content like concat('%',#{appealContent},'%')
         </if>
     </select>
+    <update id="updateModify" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            <if test="modifyContent != null">
+                modify_content = #{modifyContent},
+            </if>
+            <if test="lastTime != null">
+                last_time = now(),
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="assign" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="resultContent != null">
+                result_content = #{resultContent},
+            </if>
+            <if test="resultTime != null">
+                result_time = #{resultTime},
+            </if>
+            <if test="refuseTime != null">
+                refuse_time = #{refuseTime},
+            </if>
+            <if test="signTime != null">
+                sign_time = #{signTime},
+            </if>
+            <if test="orderStatus">
+                order_status = #{orderStatus},
+            </if>
+            last_time = now()
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

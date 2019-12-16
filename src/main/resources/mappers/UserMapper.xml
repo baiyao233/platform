@@ -122,6 +122,12 @@
         <if test="role != null">
             ,role = #{role}
         </if>
+        <if test="organName != null">
+            ,organ_name = #{organName}
+        </if>
+        <if test="organId != null">
+            ,organ_id = #{organId}
+        </if>
         where user_code = #{userCode}
     </update>
 </mapper>

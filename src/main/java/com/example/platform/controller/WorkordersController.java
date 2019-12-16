@@ -69,5 +69,26 @@ public class WorkordersController {
         return iWorkordersService.getWorkordersById(id);
     }
 
+    /**
+     * 退回修改
+     *
+     * @param id
+     * @param modifyContent
+     * @return
+     */
+    @RequestMapping(value = "update_modify.do", method = RequestMethod.POST)
+    public ServerResponse updateModify(int id, String modifyContent) {
+        return iWorkordersService.updateModify(id, modifyContent);
+    }
 
+    /**
+     * 交办部门
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "assign.do", method = RequestMethod.POST)
+    public ServerResponse assign(Workorders workorders) {
+        return iWorkordersService.assign(workorders);
+    }
 }

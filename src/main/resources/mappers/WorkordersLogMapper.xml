@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.platform.dao.WorkordersLogMapper">
+  <resultMap id="BaseResultMap" type="com.example.platform.pojo.WorkordersLog">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="node" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="organ_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="deal_way" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="deal_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="deal_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="consume_time" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="deal_user" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="workorders_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, node, organ_name, deal_way, deal_content, deal_time, consume_time, deal_user, 
+    workorders_id, order_number
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_workorders_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from platform_workorders_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.platform.pojo.WorkordersLog">
+    insert into platform_workorders_log (id, node, organ_name, 
+      deal_way, deal_content, deal_time, 
+      consume_time, deal_user, workorders_id, 
+      order_number)
+    values (#{id,jdbcType=INTEGER}, #{node,jdbcType=VARCHAR}, #{organName,jdbcType=VARCHAR}, 
+      #{dealWay,jdbcType=VARCHAR}, #{dealContent,jdbcType=VARCHAR}, #{dealTime,jdbcType=TIMESTAMP}, 
+      #{consumeTime,jdbcType=VARCHAR}, #{dealUser,jdbcType=VARCHAR}, #{workordersId,jdbcType=INTEGER}, 
+      #{orderNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.platform.pojo.WorkordersLog">
+    insert into platform_workorders_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="node != null">
+        node,
+      </if>
+      <if test="organName != null">
+        organ_name,
+      </if>
+      <if test="dealWay != null">
+        deal_way,
+      </if>
+      <if test="dealContent != null">
+        deal_content,
+      </if>
+      <if test="dealTime != null">
+        deal_time,
+      </if>
+      <if test="consumeTime != null">
+        consume_time,
+      </if>
+      <if test="dealUser != null">
+        deal_user,
+      </if>
+      <if test="workordersId != null">
+        workorders_id,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="node != null">
+        #{node,jdbcType=VARCHAR},
+      </if>
+      <if test="organName != null">
+        #{organName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealWay != null">
+        #{dealWay,jdbcType=VARCHAR},
+      </if>
+      <if test="dealContent != null">
+        #{dealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="dealTime != null">
+        #{dealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dealUser != null">
+        #{dealUser,jdbcType=VARCHAR},
+      </if>
+      <if test="workordersId != null">
+        #{workordersId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.platform.pojo.WorkordersLog">
+    update platform_workorders_log
+    <set>
+      <if test="node != null">
+        node = #{node,jdbcType=VARCHAR},
+      </if>
+      <if test="organName != null">
+        organ_name = #{organName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealWay != null">
+        deal_way = #{dealWay,jdbcType=VARCHAR},
+      </if>
+      <if test="dealContent != null">
+        deal_content = #{dealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="dealTime != null">
+        deal_time = #{dealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeTime != null">
+        consume_time = #{consumeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dealUser != null">
+        deal_user = #{dealUser,jdbcType=VARCHAR},
+      </if>
+      <if test="workordersId != null">
+        workorders_id = #{workordersId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.platform.pojo.WorkordersLog">
+    update platform_workorders_log
+    set node = #{node,jdbcType=VARCHAR},
+      organ_name = #{organName,jdbcType=VARCHAR},
+      deal_way = #{dealWay,jdbcType=VARCHAR},
+      deal_content = #{dealContent,jdbcType=VARCHAR},
+      deal_time = #{dealTime,jdbcType=TIMESTAMP},
+      consume_time = #{consumeTime,jdbcType=VARCHAR},
+      deal_user = #{dealUser,jdbcType=VARCHAR},
+      workorders_id = #{workordersId,jdbcType=INTEGER},
+      order_number = #{orderNumber,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="logByWorkordersId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from platform_workorders_log
+    where workorders_id = #{workordersId}
+  </select>
+  <select id="logCount" resultType="int">
+    select
+    count(1)
+    from platform_workorders_log
+    where workorders_id = #{workordersId}
+  </select>
+</mapper>

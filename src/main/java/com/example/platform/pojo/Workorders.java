@@ -41,6 +41,12 @@ public class Workorders {
 
     private Date refuseTime;
 
+    private Date signTime;
+
+    private Date lastTime;
+
+    private String modifyContent;
+
     private String reserved1;
 
     private String reserved2;
@@ -55,7 +61,7 @@ public class Workorders {
 
     private String endTime;
 
-    public Workorders(Integer id, String orderNumber, String orderStatus, String userCode, String userName, String idNumber, String phone, String sex, String email, Date appealTime, String appealType, String address, String appealContent, Integer organId, String organName, String resultContent, Date resultTime, String refuseContent, Date refuseTime, String reserved1, String reserved2, String reserved3, String reserved4, String reserved5) {
+    public Workorders(Integer id, String orderNumber, String orderStatus, String userCode, String userName, String idNumber, String phone, String sex, String email, Date appealTime, String appealType, String address, String appealContent, Integer organId, String organName, String resultContent, Date resultTime, String refuseContent, Date refuseTime, Date signTime, Date lastTime, String modifyContent, String reserved1, String reserved2, String reserved3, String reserved4, String reserved5) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.orderStatus = orderStatus;
@@ -75,6 +81,9 @@ public class Workorders {
         this.resultTime = resultTime;
         this.refuseContent = refuseContent;
         this.refuseTime = refuseTime;
+        this.signTime = signTime;
+        this.lastTime = lastTime;
+        this.modifyContent = modifyContent;
         this.reserved1 = reserved1;
         this.reserved2 = reserved2;
         this.reserved3 = reserved3;
@@ -292,5 +301,30 @@ public class Workorders {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getModifyContent() {
+        return modifyContent;
+    }
+
+    public void setModifyContent(String modifyContent) {
+        this.modifyContent = modifyContent;
+    }
+
+    public Date getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Date signTime) {
+        this.signTime = signTime;
+    }
+
+
+    public Date getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(Date lastTime) {
+        this.lastTime = lastTime;
     }
 }

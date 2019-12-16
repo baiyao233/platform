@@ -79,12 +79,16 @@
                 }
             },
             error: function () {
-                alert("系统错误");
+                $(location).attr('href', './login.html');
             }
         });
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/workorders/select_workorders.do",
+            data: {
+                pageNum: 1,
+                pageSize: 100000,
+            },
             xhrFields: {
                 withCredentials: true
             },
@@ -94,14 +98,39 @@
             dataType: "json",
             success: function (res) {
                 if (res.status == 0) {
-                    var all_count = res.count;
-                    document.getElementById("all_count").innerText = all_count;
+                    var modifyCount = 0;
+                    var auditCount = 0;
+                    var dealCount = 0;
+                    var refuseCount = 0;
+                    var signCount = 0;
+                    var endCount = 0;
+                    for (var i = 0; i < res.count; i++) {
+                        if (res.data.list[i].orderStatus == 5) {
+                            modifyCount++;
+                        } else if (res.data.list[i].orderStatus == 0) {
+                            auditCount++;
+                        } else if (res.data.list[i].orderStatus == 1) {
+                            signCount++;
+                        } else if (res.data.list[i].orderStatus == 2) {
+                            dealCount++;
+                        } else if (res.data.list[i].orderStatus == 3) {
+                            refuseCount++;
+                        } else if (res.data.list[i].orderStatus == 4) {
+                            endCount++;
+                        }
+                    }
+                    document.getElementById("modifyCount").innerText = modifyCount;
+                    document.getElementById("auditCount").innerText = auditCount;
+                    document.getElementById("dealCount").innerText = dealCount;
+                    document.getElementById("refuseCount").innerText = refuseCount;
+                    document.getElementById("signCount").innerText = signCount;
+                    document.getElementById("endCount").innerText = endCount;
                 } else {
                     alert(res.msg);
                 }
             },
             error: function () {
-                alert("系统错误");
+                $(location).attr('href', './login.html');
             }
         });
         $(document).on('click', '#all_count_btn', function () {
@@ -111,6 +140,15 @@
 </script>
 <body>
 <div class="layui-fluid">
+    <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="#">首页</a>
+            </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+           onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+        </a>
+    </div>
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
@@ -129,14 +167,53 @@
                         style="text-align: center">
                         <li class="layui-col-md2 layui-col-xs6">
                             <a class="x-admin-backlog-body" href="#">
-                                <h3>工单总数</h3>
+                                <h3>待审核工单</h3>
                                 <p>
-                                    <cite id="all_count">0</cite></p>
+                                    <cite id="auditCount">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>退回修改工单</h3>
+                                <p>
+                                    <cite id="modifyCount">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>处理中工单</h3>
+                                <p>
+                                    <cite id="dealCount">0</cite></p>
                             </a>
                         </li>
 
                     </ul>
+                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"
+                        style="text-align: center">
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>已拒绝工单</h3>
+                                <p>
+                                    <cite id="refuseCount">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>待签收工单</h3>
+                                <p>
+                                    <cite id="signCount">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>已结案工单</h3>
+                                <p>
+                                    <cite id="endCount">0</cite></p>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+
             </div>
         </div>
     </div>

@@ -69,14 +69,28 @@
                         <input type="radio" name="sex" value="0" title="女" id="sexw" checked lay-filter="sex">
                     </div>
                 </div>
+                <!--                <div class="layui-form-item" pane>-->
+                <!--                    <label class="layui-form-label"><span class="x-red">*</span>角色</label>-->
+                <!--                    <div class="layui-input-block">-->
+                <!--                        <input type="radio" name="role" value="1" title="管理员" id="role_admin">-->
+                <!--                        <input type="radio" name="role" value="0" title="普通用户" id="role_common" checked>-->
+                <!--                        <input type="radio" name="role" value="2" title="一级部门" id="role">-->
+                <!--                        <input type="radio" name="role" value="3" title="二级部门" id="role_second">-->
+                <!--                        <input type="radio" name="role" value="4" title="二级部门" id="role_third">-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="layui-form-item" pane>
                     <label class="layui-form-label"><span class="x-red">*</span>角色</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="role" value="1" title="管理员" id="role_admin">
-                        <input type="radio" name="role" value="0" title="普通用户" id="role_common" checked>
-                        <input type="radio" name="role" value="2" title="一级部门" id="role">
-                        <input type="radio" name="role" value="3" title="二级部门" id="role_second">
-                        <input type="radio" name="role" value="4" title="二级部门" id="role_third">
+                    <div class="layui-input-block" style="width: 190px">
+                        <select name="role" id="role">
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane>
+                    <label class="layui-form-label"><span class="x-red">*</span>处办部门</label>
+                    <div class="layui-input-block" style="width: 190px">
+                        <input type="text" id="tree" lay-filter="tree" class="layui-input">
+                        <input type="hidden" id="organName" value="">
                     </div>
                 </div>
                 <div class="layui-form-item" pane>
@@ -130,22 +144,22 @@
                             $("#sexm").removeAttr("checked");
                             layui.form.render();//重新渲染
                         }
-                        if (res.data.role == 1) {
-                            $('#role_admin').attr('checked', true);
-                            layui.form.render();//重新渲染
-                        } else if (res.data.role == 2) {
-                            $('#role').attr('checked', true);
-                            layui.form.render();//重新渲染
-                        } else if (res.data.role == 3) {
-                            $('#role_second').attr('checked', true);
-                            layui.form.render();//重新渲染
-                        } else if (res.data.role == 4) {
-                            $('#role_third').attr('checked', true);
-                            layui.form.render();//重新渲染
-                        } else {
-                            $('#role_common').attr('checked', true);
-                            layui.form.render();//重新渲染
-                        }
+                        // if (res.data.role == 1) {
+                        //     document.getElementById("role").value = "管理员";
+                        //     layui.form.render();//重新渲染
+                        // } else if (res.data.role == 2) {
+                        //     $('#role').attr('checked', true);
+                        //     layui.form.render();//重新渲染
+                        // } else if (res.data.role == 3) {
+                        //     $('#role_second').attr('checked', true);
+                        //     layui.form.render();//重新渲染
+                        // } else if (res.data.role == 4) {
+                        //     $('#role_third').attr('checked', true);
+                        //     layui.form.render();//重新渲染
+                        // } else {
+                        //     $('#role_common').attr('checked', true);
+                        //     layui.form.render();//重新渲染
+                        // }
                     } else {
                         layer.alert(res.msg);
                     }
@@ -160,8 +174,10 @@
         //监听提交
         form.on('submit(add)', function () {
                 var sexdata = $("input:checked[name='sex']").val();
-                var roledata = $("input:checked[name='role']").val();
                 var userCode = document.getElementById("L_userCode").value;
+                var organId = document.getElementById("tree").value;
+                var organName = document.getElementById("organName").value;
+                var role = $('#role option:selected').val();
                 $.ajax({
                     type: "POST",
                     url: "http://localhost:8080/user/update_info.do",
@@ -169,7 +185,9 @@
                         userCode: userCode,
                         userName: document.getElementById("L_username").value,
                         sex: sexdata,
-                        role: roledata
+                        role: role,
+                        organId: organId,
+                        organName: organName,
                     },
                     xhrFields: {
                         withCredentials: true
@@ -202,7 +220,26 @@
                 return false;
             }
         );
+        jQuery.ajax({
+            type: "POST",
+            url: "http://localhost:8080/role/get_all_role.do",
+            xhrFields: {
+                withCredentials: true
+            },
 
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                var roleSelect = "<option value=''>请选择</option>\n";
+                for (var i = 0; i < res.count; i++) {
+                    roleSelect += "<option value='" + res.data.list[i].id + "'>" + res.data.list[i].roleName + "</option>\n";
+                }
+                //console.log(roleSelect);
+                document.getElementById("role").innerHTML = roleSelect;
+                layui.form.render();//重新渲染
+            }
+        });
         //自定义验证规则
         // form.verify({
         //     nikename: function (value) {
@@ -219,7 +256,65 @@
         // });
 
 
-    });</script>
+    });
+</script>
+
+<script>
+    layui.config({
+        base: "../module/"
+    }).extend({
+        treeSelect: "treeSelect/treeSelect"
+    });
+    layui.use(["treeSelect"], function () {
+        var treeSelect = layui.treeSelect;
+        var treeData = "";
+        treeSelect.render({
+            // 选择器
+            elem: '#tree',
+            // 数据
+            data: 'http://localhost:8080/organ/get_list_organ.do',
+            //data:"data2.json",
+            // 异步加载方式：get/post，默认get
+            type: 'post',
+            // 占位符
+            placeholder: '请选择处办部门',
+            // 是否开启搜索功能：true/false，默认false
+            search: true,
+            // 一些可定制的样式
+            style: {
+                folder: { // 父节点图标
+                    enable: true // 是否开启：true/false
+                },
+                line: { // 连接线
+                    enable: true // 是否开启：true/false
+                }
+            },
+
+            // 点击回调
+            click: function (d) {
+                //console.log(d.current.id);
+                var organId = document.getElementById("tree");
+                var organName = document.getElementById("organName");
+                organId.value = d.current.id;
+                organName.value = d.current.name;
+                //console.log(organId.value);
+            },
+            // 加载完成后的回调函数
+            success: function (d) {
+                // console.log(d);
+// //                选中节点，根据id筛选
+//                 treeSelect.checkNode('tree', 3);
+                //console.log($('#tree').val());
+// //                获取zTree对象，可以调用zTree方法
+                var treeObj = treeSelect.zTree('tree');
+                //console.log(d.data.id);
+// //                刷新树结构
+                //treeSelect.refresh('tree');
+            }
+        });
+    });
+</script>
+
 <script>var _hmt = _hmt || [];
 (function () {
     var hm = document.createElement("script");

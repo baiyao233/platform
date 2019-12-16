@@ -127,18 +127,17 @@ public class UserController {
     /**
      * 更新姓名，性别，角色
      *
-     * @param userName
-     * @param sex
-     * @param role
+     * @param user
      * @return
      */
     @RequestMapping(value = "update_info.do", method = RequestMethod.POST)
-    public ServerResponse<User> updateInfo(String userName, int sex, int role, String userCode) {
-        return iUserService.updateInfo(userName, sex, role, userCode);
+    public ServerResponse<User> updateInfo(User user) {
+        return iUserService.updateInfo(user);
     }
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */

@@ -27,7 +27,7 @@ public interface IUserService {
 
     ServerResponse<String> checkValid(String str, String type);
 
-    ServerResponse<User> updateInfo(String userName,int sex,int role,String userCode);
+    ServerResponse<User> updateInfo(User user);
 
     ServerResponse deleteByPrimaryKey(int id);
 
