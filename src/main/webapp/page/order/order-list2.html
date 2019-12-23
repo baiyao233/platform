@@ -72,7 +72,8 @@
             <label class="layui-form-label">处办部门</label>
             <div class="layui-input-inline">
                 <input type="text" id="tree" lay-filter="tree" class="layui-input">
-                <input type="hidden" id="organName" value="">
+                <input type="hidden" id="organName">
+                <input type="hidden" id="userOrganId">
             </div>
             <label for="orderStatus" class="layui-form-label">
                 工单状态
@@ -105,9 +106,9 @@
                        class="layui-input" id="appealContent">
             </div>
         </div>
-<!--        <div class="layui-form-item">-->
+        <!--        <div class="layui-form-item">-->
 
-<!--        </div>-->
+        <!--        </div>-->
     </form>
 </div>
 <!-- 表格操作列 -->
@@ -116,10 +117,12 @@
 </script>
 <table class="layui-hide" id="test" lay-filter="test" style="margin: 0 auto"></table>
 <script type="text/html" id="toolbarDemo">
-    <button class="layui-btn" data-type="reload" id="search" type="button" >
-        <i class="layui-icon">&#xe615;</i>查询</button>
+    <button class="layui-btn" data-type="reload" id="search" type="button">
+        <i class="layui-icon">&#xe615;</i>查询
+    </button>
     <button class="layui-btn layui-btn-danger" data-type="reload" id="rest" type="button">
-        <i class="layui-icon">&#xe669;</i>重置</button>
+        <i class="layui-icon">&#xe669;</i>重置
+    </button>
 </script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -130,6 +133,7 @@
         var table = layui.table;
         var laydate = layui.laydate;
         var userCode = "";
+        var userOrganId = "";
         var data = "";
         //日期时间选择器
         laydate.render({
@@ -143,6 +147,7 @@
         jQuery.ajax({
             type: "POST",
             url: "http://localhost:8080/user/get_user_info.do",
+            async: false,
             xhrFields: {
                 withCredentials: true
             },
@@ -153,6 +158,8 @@
             success: function (res) {
                 if (res.status == 0) {
                     userCode = res.data.userCode;
+                    userOrganId = res.data.organId;
+                    document.getElementById("userOrganId").value = res.data.organId;
                 } else {
                     alert(res.msg);
                 }
@@ -161,6 +168,9 @@
                 alert("系统错误");
             }
         });
+        if (userOrganId == null || userOrganId == "") {
+            userOrganId = 229292;
+        }
         table.render({
             elem: '#test'
             , url: "http://localhost:8080/workorders/select_workorders.do"
@@ -202,8 +212,8 @@
             , id: 'workordersReload'
             , cellMinWidth: 80
             // , skin:'row'
-            ,where:{
-                userCode:userCode
+            , where: {
+                organId: userOrganId
             }
             , cols:
                 [[
@@ -233,7 +243,7 @@
                                 return "<span style=\"color:#228B22;\">已结案</span>";
                             } else if (res.orderStatus == 5) {
                                 return "<span style=\"color:#c00;\">退回修改</span>";
-                            } else if (res.orderStatus == 6){
+                            }else if (res.orderStatus == 6){
                                 return "<span style=\"color:#BA55D3;\">部门答复</span>";
                             }
                         }
@@ -256,7 +266,7 @@
             var id = obj.data.id;
             var url = "";
             if (event == 'deal') {
-                url = "order-deal.html?id="+id;
+                url = "order-organDeal.html?id=" + id;
                 open(url);
             }
         });
@@ -272,17 +282,17 @@
                 var appealContent = $('#appealContent');
                 table.reload('workordersReload', {
                     page: {
-                        curr:1
+                        curr: 1
                     },
                     where: {
                         orderNumber: orderNumber.val(),
                         appealType: appealType,
                         startTime: startTime.val(),
                         endTime: endTime.val(),
-                        organId: organId.val(),
+                        organId: userOrganId,
                         orderStatus: orderStatus,
-                        userCode:userCode.val(),
-                        appealContent:appealContent.val()
+                        userCode: userCode.val(),
+                        appealContent: appealContent.val()
                     }
 
                 });

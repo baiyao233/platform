@@ -80,14 +80,14 @@
                 <!--                    </div>-->
                 <!--                </div>-->
                 <div class="layui-form-item" pane>
-                    <label class="layui-form-label"><span class="x-red">*</span>角色</label>
+                    <label class="layui-form-label">角色</label>
                     <div class="layui-input-block" style="width: 190px">
                         <select name="role" id="role">
                         </select>
                     </div>
                 </div>
                 <div class="layui-form-item" pane>
-                    <label class="layui-form-label"><span class="x-red">*</span>处办部门</label>
+                    <label class="layui-form-label">处办部门</label>
                     <div class="layui-input-block" style="width: 190px">
                         <input type="text" id="tree" lay-filter="tree" class="layui-input">
                         <input type="hidden" id="organName" value="">
@@ -135,6 +135,8 @@
                         document.getElementById("L_idNumber").value = res.data.idNumber;
                         document.getElementById("L_email").value = res.data.email;
                         document.getElementById("L_username").value = res.data.userName;
+                        document.getElementById("tree").placeholder = res.data.organName;
+                        console.log(document.getElementById("tree").placeholder);
                         if (res.data.sex == 1) {
                             $('#sexm').attr('checked', true);
                             $('#sexw').removeAttr('checked');
@@ -277,7 +279,6 @@
             // 异步加载方式：get/post，默认get
             type: 'post',
             // 占位符
-            placeholder: '请选择处办部门',
             // 是否开启搜索功能：true/false，默认false
             search: true,
             // 一些可定制的样式

@@ -104,6 +104,7 @@
                     var refuseCount = 0;
                     var signCount = 0;
                     var endCount = 0;
+                    var resultCount = 0;
                     for (var i = 0; i < res.count; i++) {
                         if (res.data.list[i].orderStatus == 5) {
                             modifyCount++;
@@ -117,6 +118,8 @@
                             refuseCount++;
                         } else if (res.data.list[i].orderStatus == 4) {
                             endCount++;
+                        } else if (res.data.list[i].orderStatus == 6) {
+                            resultCount++;
                         }
                     }
                     document.getElementById("modifyCount").innerText = modifyCount;
@@ -125,6 +128,7 @@
                     document.getElementById("refuseCount").innerText = refuseCount;
                     document.getElementById("signCount").innerText = signCount;
                     document.getElementById("endCount").innerText = endCount;
+                    document.getElementById("resultCount").innerText = resultCount;
                 } else {
                     alert(res.msg);
                 }
@@ -133,10 +137,13 @@
                 $(location).attr('href', './login.html');
             }
         });
-        $(document).on('click', '#all_count_btn', function () {
-            xadmin.add_tab('订单列表', './page/order/order-list.html')
-        });
+
     });
+</script>
+<script type="text/javascript">
+    function test() {
+        xadmin.add_tab('部门列表', './page/organ/organ-list.html');
+    }
 </script>
 <body>
 <div class="layui-fluid">
@@ -166,7 +173,7 @@
                     <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"
                         style="text-align: center">
                         <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
+                            <a class="x-admin-backlog-body" href="javascript:void(0)">
                                 <h3>待审核工单</h3>
                                 <p>
                                     <cite id="auditCount">0</cite></p>
@@ -186,13 +193,20 @@
                                     <cite id="dealCount">0</cite></p>
                             </a>
                         </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>部门已答复工单</h3>
+                                <p>
+                                    <cite id="resultCount">0</cite></p>
+                            </a>
+                        </li>
 
                     </ul>
                     <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"
                         style="text-align: center">
                         <li class="layui-col-md2 layui-col-xs6">
                             <a class="x-admin-backlog-body" href="#">
-                                <h3>已拒绝工单</h3>
+                                <h3>部门已拒绝工单</h3>
                                 <p>
                                     <cite id="refuseCount">0</cite></p>
                             </a>

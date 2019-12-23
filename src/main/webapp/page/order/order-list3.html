@@ -105,9 +105,9 @@
                        class="layui-input" id="appealContent">
             </div>
         </div>
-<!--        <div class="layui-form-item">-->
+        <!--        <div class="layui-form-item">-->
 
-<!--        </div>-->
+        <!--        </div>-->
     </form>
 </div>
 <!-- 表格操作列 -->
@@ -116,10 +116,12 @@
 </script>
 <table class="layui-hide" id="test" lay-filter="test" style="margin: 0 auto"></table>
 <script type="text/html" id="toolbarDemo">
-    <button class="layui-btn" data-type="reload" id="search" type="button" >
-        <i class="layui-icon">&#xe615;</i>查询</button>
+    <button class="layui-btn" data-type="reload" id="search" type="button">
+        <i class="layui-icon">&#xe615;</i>查询
+    </button>
     <button class="layui-btn layui-btn-danger" data-type="reload" id="rest" type="button">
-        <i class="layui-icon">&#xe669;</i>重置</button>
+        <i class="layui-icon">&#xe669;</i>重置
+    </button>
 </script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -143,6 +145,7 @@
         jQuery.ajax({
             type: "POST",
             url: "http://localhost:8080/user/get_user_info.do",
+            async: false,
             xhrFields: {
                 withCredentials: true
             },
@@ -202,8 +205,8 @@
             , id: 'workordersReload'
             , cellMinWidth: 80
             // , skin:'row'
-            ,where:{
-                userCode:userCode
+            , where: {
+                userCode: userCode
             }
             , cols:
                 [[
@@ -233,7 +236,7 @@
                                 return "<span style=\"color:#228B22;\">已结案</span>";
                             } else if (res.orderStatus == 5) {
                                 return "<span style=\"color:#c00;\">退回修改</span>";
-                            } else if (res.orderStatus == 6){
+                            } else if (res.orderStatus == 6) {
                                 return "<span style=\"color:#BA55D3;\">部门答复</span>";
                             }
                         }
@@ -256,7 +259,7 @@
             var id = obj.data.id;
             var url = "";
             if (event == 'deal') {
-                url = "order-deal.html?id="+id;
+                url = "order-deal.html?id=" + id;
                 open(url);
             }
         });
@@ -272,7 +275,7 @@
                 var appealContent = $('#appealContent');
                 table.reload('workordersReload', {
                     page: {
-                        curr:1
+                        curr: 1
                     },
                     where: {
                         orderNumber: orderNumber.val(),
@@ -281,8 +284,8 @@
                         endTime: endTime.val(),
                         organId: organId.val(),
                         orderStatus: orderStatus,
-                        userCode:userCode.val(),
-                        appealContent:appealContent.val()
+                        userCode: userCode.val(),
+                        appealContent: appealContent.val()
                     }
 
                 });

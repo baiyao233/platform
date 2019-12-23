@@ -49,26 +49,15 @@
         }
     }
 
-    function modify() {
-        var str = location.search;
-        var id = str.split('?')[1].split('=')[1];
-        var url = "order-modify.html?id=" + id;
-        xadmin.open("退回修改", url, 400, 300);
-    }
-
-    function assign() {
+    function sign() {
         var str = location.search;
         if (str != null) {
             var id = str.split('?')[1].split('=')[1];
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/workorders/assign.do",
+                url: "http://localhost:8080/workorders/sign.do",
                 data: {
-                    id: id,
-                    resultContent: document.getElementById("resultContent").value,
-                    resultTime: document.getElementById("resultTime").value,
-                    refuseTime: document.getElementById("refuseTime").value,
-                    signTime: document.getElementById("signTime").value
+                    id: id
                 },
                 xhrFields: {
                     withCredentials: true
@@ -76,7 +65,45 @@
                 crossDomain: true,
                 dataType: "json",
                 success: function (res) {
-                    layer.alert("交办部门成功", {
+                    layer.alert("签收成功成功", {
+                        icon: 6
+                    }, function () {
+                        location.reload();
+                    })
+                },
+                error: function (res) {
+                    layer.alert(res.status);
+                }
+
+            });
+        }
+    }
+
+    function refuse() {
+        var str = location.search;
+        var id = str.split('?')[1].split('=')[1];
+        var url = "order-refuse.html?id=" + id;
+        xadmin.open("部门拒绝", url, 400, 300);
+    }
+
+    function result() {
+        var str = location.search;
+        if (str != null) {
+            var id = str.split('?')[1].split('=')[1];
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/workorders/result.do",
+                data: {
+                    id: id,
+                    resultContent: document.getElementById("resultContent").value
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                dataType: "json",
+                success: function (res) {
+                    layer.alert("部门答复成功", {
                         icon: 6
                     }, function () {
                         window.close();
@@ -89,13 +116,10 @@
             });
         }
     }
-    function btn_status() {
-        var resultTime = document.getElementById("resultTime").value;
-        var refuseTime = document.getElementById("refuseTime").value;
-        var signTime = document.getElementById("signTime").value;
+    function btn_status(){
         var resultContent = document.getElementById("resultContent").value;
-        var aBtn = document.getElementById("assign_btn");
-        if (resultTime != "" && refuseTime != "" && signTime != "" && resultContent != "") {
+        var aBtn = document.getElementById("result_btn");
+        if (resultContent != "") {
             aBtn.className = "layui-btn";
             aBtn.disabled = "";
         }
@@ -104,8 +128,16 @@
 <form class="layui-form layui-form-pane" action="" style="margin-left: 200px;margin-top: 30px">
     <input type="hidden" id="userCode">
     <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
-        <button class="layui-btn layui-btn-danger" data-type="reload" type="button" onclick="modify()">退回修改</button>
-        <button class="layui-btn layui-btn-disabled" data-type="reload" type="button" onclick="assign()" id="assign_btn" disabled="disabled">交办部门</button>
+        <button class="layui-btn" data-type="reload" type="button" onclick="sign()" id="sign_btn"
+                style="width: 94px;display: none">
+            签收
+        </button>
+        <button class="layui-btn layui-btn-danger" data-type="reload" type="button"
+                style="width: 94px;display: none" id="refuse_btn" onclick="refuse();">拒绝
+        </button>
+        <button class="layui-btn layui-btn-disabled" data-type="reload" type="button"
+                disabled="disabled" id="result_btn" style="display:none;" onclick="result();">提交答复
+        </button>
     </div>
     <div id="info_head" class="layui-form-item"
          style="margin-left: 100px;margin-top: 10px;border: black 1px solid;width: 915px">
@@ -164,6 +196,30 @@
                        class="layui-input" style="width: 500px" id="address" disabled="disabled">
             </div>
         </div>
+        <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
+            <label for="resultTime" class="layui-form-label" style="font-size: 12px">
+                部门反馈时限
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="resultTime" placeholder="yyyy-MM-dd HH:mm:ss"
+                       disabled="disabled" style="color: red">
+            </div>
+            <label for="refuseTime" class="layui-form-label" style="font-size: 12px">
+                部门拒绝时限
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="refuseTime" placeholder="yyyy-MM-dd HH:mm:ss"
+                       disabled="disabled" style="color: red">
+            </div>
+            <label for="signTime" class="layui-form-label" style="font-size: 12px">
+                部门签收时限
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="signTime" placeholder="yyyy-MM-dd HH:mm:ss"
+                       disabled="disabled" style="color: red">
+            </div>
+        </div>
+
         <div class="layui-form-item layui-form-text" style="margin-left: 100px;margin-top: 10px">
             <label class="layui-form-label" style="width: 920px;"><span style="padding-left: 13px">诉求内容</span></label>
             <div class="layui-input-block">
@@ -180,26 +236,6 @@
         </a>
     </div>
     <div id="workorders_deal">
-        <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
-            <label for="resultTime" class="layui-form-label" style="font-size: 12px">
-                <span style="color: red">*</span>部门反馈时限
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="resultTime" placeholder="yyyy-MM-dd HH:mm:ss" onchange="btn_status()">
-            </div>
-            <label for="refuseTime" class="layui-form-label" style="font-size: 12px">
-                <span style="color: red">*</span>部门拒绝时限
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="refuseTime" placeholder="yyyy-MM-dd HH:mm:ss" onchange="btn_status()">
-            </div>
-            <label for="signTime" class="layui-form-label" style="font-size: 12px">
-                <span style="color: red">*</span>部门签收时限
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="signTime" placeholder="yyyy-MM-dd HH:mm:ss" onchange="btn_status()">
-            </div>
-        </div>
 
         <div class="layui-form-item layui-form-text" style="margin-left: 100px;margin-top: 10px">
 
@@ -247,6 +283,7 @@
             jQuery.ajax({
                 type: "POST",
                 url: "http://localhost:8080/workorders/get_workorders_by_id.do",
+                async: false,
                 data: {
                     id: id
                 },
@@ -266,6 +303,9 @@
                     var organName = res.data.organName;
                     var address = res.data.address;
                     var appealContent = res.data.appealContent;
+                    var refuseTime = res.data.refuseTime;
+                    var resultTime = res.data.resultTime;
+                    var signTime = res.data.signTime;
                     orderNumber = res.data.orderNumber;
                     document.getElementById("userCode").value = userCode;
                     document.getElementById("username").value = userName;
@@ -282,6 +322,15 @@
                     document.getElementById("address").value = address;
                     document.getElementById("appealContent").value = appealContent;
                     document.getElementById("orderNumber").value = orderNumber;
+                    document.getElementById("resultTime").value = formatDateTime(resultTime);
+                    document.getElementById("refuseTime").value = formatDateTime(refuseTime);
+                    document.getElementById("signTime").value = formatDateTime(signTime);
+                    if (res.data.orderStatus == 2) {
+                        document.getElementById("refuse_btn").style.display = "";
+                        document.getElementById("result_btn").style.display = "";
+                    } else if (res.data.orderStatus == 1) {
+                        document.getElementById("sign_btn").style.display = "";
+                    }
                 },
                 error: function (res) {
                     layer.alert(res.msg);

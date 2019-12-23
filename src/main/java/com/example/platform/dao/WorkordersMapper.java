@@ -15,11 +15,19 @@ public interface WorkordersMapper {
 
     Workorders selectByPrimaryKey(Integer id);
 
-    List<Workorders> selectWorkorders (Workorders workorders);
+    List<Workorders> selectWorkorders(Workorders workorders);
 
     int workordersCount(Workorders workorders);
 
     int updateModify(@Param("id") Integer id, @Param("orderStatus") String orderStatus, @Param("modifyContent") String modifyContent, @Param("lastTime") Date lastTime);
 
     int assign(Workorders workorders);
+
+    Workorders selectOrderNumber(String orderNumber);
+
+    int sign(Workorders workorders);
+
+    int refuse(Workorders workorders);
+
+    int result(Workorders workorders);
 }

@@ -122,7 +122,7 @@
         <if test="role != null">
             ,role = #{role}
         </if>
-        <if test="organName != null">
+        <if test="organName != null and organName != ''">
             ,organ_name = #{organName}
         </if>
         <if test="organId != null">

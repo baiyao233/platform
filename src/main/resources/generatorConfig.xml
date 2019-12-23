@@ -71,6 +71,7 @@
 <!--        <table tableName="platform_workorders" domainObjectName="Workorders" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
 <!--        <table tableName="platform_workorders_log" domainObjectName="WorkordersLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+<!--                <table tableName="platform_base_info" domainObjectName="BaseInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
         <!-- geelynote mybatis插件的搭建 -->
     </context>

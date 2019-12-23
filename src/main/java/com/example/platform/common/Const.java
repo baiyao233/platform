@@ -15,6 +15,8 @@ public class Const {
     public static final String PHONE = "phone";
     public static final String PASSWORD = "password";
     public static final String ROLE_CODE = "roleCode";
+    public static final String ORDER_NUMBER = "orderNumber";
+    public static final String BASEINFO_TYPE = "baseInfo_type";
 
     public interface Role {
         /**

@@ -55,7 +55,7 @@
       appeal_time, appeal_type, address, 
       appeal_content, organ_id, organ_name, 
       result_content, result_time, refuse_content, 
-      refuse_time,modify_content ,reserved1, reserved2,
+      refuse_time,modify_content ,last_time,reserved1, reserved2,
       reserved3, reserved4, reserved5
       )
     values (#{id,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
@@ -64,7 +64,7 @@
       #{appealTime,jdbcType=TIMESTAMP}, #{appealType,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{appealContent,jdbcType=VARCHAR}, #{organId,jdbcType=INTEGER}, #{organName,jdbcType=VARCHAR}, 
       #{resultContent,jdbcType=VARCHAR}, #{resultTime,jdbcType=TIMESTAMP}, #{refuseContent,jdbcType=VARCHAR}, 
-      #{refuseTime,jdbcType=TIMESTAMP}, #{modifyContent,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR},
+      #{refuseTime,jdbcType=TIMESTAMP}, #{modifyContent,jdbcType=VARCHAR}, now(),#{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR},
       #{reserved3,jdbcType=VARCHAR}, #{reserved4,jdbcType=VARCHAR}, #{reserved5,jdbcType=VARCHAR}
       )
   </insert>
@@ -143,9 +143,7 @@
             <if test="modifyContent != null">
                 modify_content = #{modifyContent},
             </if>
-            <if test="lastTime != null">
-                last_time = now(),
-            </if>
+            last_time = now(),
         </set>
         where id = #{id}
     </update>
@@ -164,7 +162,62 @@
             <if test="signTime != null">
                 sign_time = #{signTime},
             </if>
-            <if test="orderStatus">
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            last_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <select id="selectOrderNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from platform_workorders
+        where order_number = #{orderNumber}
+    </select>
+    <update id="sign" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            last_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="refuse" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            <if test="refuseContent != null">
+                refuse_content = #{refuseContent},
+            </if>
+            last_time = now(),
+        </set>
+        where id = #{id}
+    </update>
+    <update id="result" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="resultContent != null">
+                result_content = #{resultContent},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            last_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="settle" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="resultContent != null">
+                result_content = #{resultContent},
+            </if>
+            <if test="orderStatus != null">
                 order_status = #{orderStatus},
             </if>
             last_time = now()

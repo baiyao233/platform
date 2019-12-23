@@ -18,7 +18,16 @@ public interface IWorkordersService {
 
     ServerResponse getWorkordersById(int id);
 
-    ServerResponse updateModify(int id,String modifyContent);
+    ServerResponse updateModify(int id, String modifyContent);
 
     ServerResponse assign(Workorders workorders);
+
+    ServerResponse sign(Workorders workorders);
+
+    ServerResponse refuse(Workorders workorders);
+
+    ServerResponse result(Workorders workorders);
+
+    ServerResponse checkValid(String str, String type);
+
 }

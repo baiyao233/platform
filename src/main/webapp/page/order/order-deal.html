@@ -89,6 +89,7 @@
             });
         }
     }
+
     function btn_status() {
         var resultTime = document.getElementById("resultTime").value;
         var refuseTime = document.getElementById("refuseTime").value;
@@ -99,13 +100,21 @@
             aBtn.className = "layui-btn";
             aBtn.disabled = "";
         }
+        console.log(resultTime);
     }
 </script>
 <form class="layui-form layui-form-pane" action="" style="margin-left: 200px;margin-top: 30px">
     <input type="hidden" id="userCode">
-    <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px" id="all_btn">
-        <button class="layui-btn layui-btn-danger" data-type="reload" type="button" onclick="modify()">退回修改</button>
-        <button class="layui-btn layui-btn-disabled" data-type="reload" type="button" onclick="assign()" id="assign_btn" disabled="disabled">交办部门</button>
+    <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
+        <button class="layui-btn layui-btn-danger" data-type="reload" type="button" onclick="modify()" id="modify_btn">
+            退回修改
+        </button>
+        <button class="layui-btn layui-btn-normal" data-type="reload" type="button" id="end"
+                style="width: 94px;display: none">结案
+        </button>
+        <button class="layui-btn layui-btn-disabled" data-type="reload" type="button" onclick="assign()" id="assign_btn"
+                disabled="disabled">交办部门
+        </button>
     </div>
     <div id="info_head" class="layui-form-item"
          style="margin-left: 100px;margin-top: 10px;border: black 1px solid;width: 915px">
@@ -116,7 +125,7 @@
                    class="layui-input" id="orderNumber" disabled="disabled" style="width: 200px">
         </div>
         <a class="layui-btn layui-btn-small" style="float: right" onclick="shouInfo();">
-            <i class="iconfont" >&#xe6a6;</i>
+            <i class="iconfont">&#xe6a6;</i>
         </a>
     </div>
     <div id="workorders_info">
@@ -164,6 +173,30 @@
                        class="layui-input" style="width: 500px" id="address" disabled="disabled">
             </div>
         </div>
+        <div class="layui-form-item" id="dateTime" style="margin-left: 100px;margin-top: 10px;display: none">
+            <label for="resultTime" class="layui-form-label" style="font-size: 12px">
+                部门反馈时限
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="resultTime1" placeholder="yyyy-MM-dd HH:mm:ss"
+                       disabled="disabled" style="color: red">
+            </div>
+            <label for="refuseTime" class="layui-form-label" style="font-size: 12px">
+                部门拒绝时限
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="refuseTime1" placeholder="yyyy-MM-dd HH:mm:ss"
+                       disabled="disabled" style="color: red">
+            </div>
+            <label for="signTime" class="layui-form-label" style="font-size: 12px">
+                部门签收时限
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="signTime1" placeholder="yyyy-MM-dd HH:mm:ss"
+                       disabled="disabled" style="color: red">
+            </div>
+        </div>
+
         <div class="layui-form-item layui-form-text" style="margin-left: 100px;margin-top: 10px">
             <label class="layui-form-label" style="width: 920px;"><span style="padding-left: 13px">诉求内容</span></label>
             <div class="layui-input-block">
@@ -180,30 +213,33 @@
         </a>
     </div>
     <div id="workorders_deal">
-        <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
+        <div class="layui-form-item" id="resultDate" style="margin-left: 100px;margin-top: 10px">
             <label for="resultTime" class="layui-form-label" style="font-size: 12px">
                 <span style="color: red">*</span>部门反馈时限
             </label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="resultTime" placeholder="yyyy-MM-dd HH:mm:ss" onchange="btn_status()">
+                <input type="text" class="layui-input" id="resultTime" placeholder="yyyy-MM-dd HH:mm:ss"
+                       onchange="btn_status()">
             </div>
             <label for="refuseTime" class="layui-form-label" style="font-size: 12px">
                 <span style="color: red">*</span>部门拒绝时限
             </label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="refuseTime" placeholder="yyyy-MM-dd HH:mm:ss" onchange="btn_status()">
+                <input type="text" class="layui-input" id="refuseTime" placeholder="yyyy-MM-dd HH:mm:ss"
+                       onchange="btn_status()">
             </div>
             <label for="signTime" class="layui-form-label" style="font-size: 12px">
                 <span style="color: red">*</span>部门签收时限
             </label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="signTime" placeholder="yyyy-MM-dd HH:mm:ss" onchange="btn_status()">
+                <input type="text" class="layui-input" id="signTime" placeholder="yyyy-MM-dd HH:mm:ss"
+                       onchange="btn_status()">
             </div>
         </div>
 
         <div class="layui-form-item layui-form-text" style="margin-left: 100px;margin-top: 10px">
 
-            <label class="layui-form-label" style="width: 920px;"><span style="color: red">*</span>答复意见</label>
+            <label class="layui-form-label" style="width: 920px;"><span style="color: red">*</span>交办意见</label>
             <div class="layui-input-block">
             <textarea placeholder="请输入内容" class="layui-textarea" style="width: 920px;padding-left: 15px"
                       id="resultContent" onchange="btn_status()"></textarea>
@@ -247,6 +283,7 @@
             jQuery.ajax({
                 type: "POST",
                 url: "http://localhost:8080/workorders/get_workorders_by_id.do",
+                async: false,
                 data: {
                     id: id
                 },
@@ -267,11 +304,17 @@
                     var address = res.data.address;
                     var appealContent = res.data.appealContent;
                     orderNumber = res.data.orderNumber;
+                    var refuseTime1 = res.data.refuseTime;
+                    var resultTime1 = res.data.resultTime;
+                    var signTime1 = res.data.signTime;
                     document.getElementById("userCode").value = userCode;
                     document.getElementById("username").value = userName;
                     document.getElementById("email").value = email;
                     document.getElementById("phone").value = phone;
                     document.getElementById("idNumber").value = idNumber;
+                    document.getElementById("resultTime1").value = formatDateTime(resultTime1);
+                    document.getElementById("refuseTime1").value = formatDateTime(refuseTime1);
+                    document.getElementById("signTime1").value = formatDateTime(signTime1);
                     if (sex == 1) {
                         document.getElementById("sex").value = "男";
                     } else {
@@ -282,8 +325,50 @@
                     document.getElementById("address").value = address;
                     document.getElementById("appealContent").value = appealContent;
                     document.getElementById("orderNumber").value = orderNumber;
-                    if (res.data.orderStatus != 0){
-                        document.getElementById("all_btn").style.display="none";
+                    // 工单状态
+                    // 0-	待审核
+                    // 1-	待签收
+                    // 2-	处理中
+                    // 3-	拒绝
+                    // 4-	已结案
+                    // 5-	退回修改
+                    // 6-   部门已答复
+                    if (res.data.orderStatus == 0) {
+                        document.getElementById("modify_btn").style.display = "";
+                        document.getElementById("assign_btn").style.display = "";
+                    } else if (res.data.orderStatus == 1) {
+                        document.getElementById("modify_btn").style.display = "none";
+                        document.getElementById("assign_btn").style.display = "none";
+                        document.getElementById("workorders_deal").style.display = "none";
+                        document.getElementById("info_deal").style.display = "none";
+                        document.getElementById("dateTime").style.display = "";
+                    } else if (res.data.orderStatus == 2) {
+                        document.getElementById("modify_btn").style.display = "none";
+                        document.getElementById("assign_btn").style.display = "none";
+                        document.getElementById("workorders_deal").style.display = "none";
+                        document.getElementById("info_deal").style.display = "none";
+                        document.getElementById("dateTime").style.display = "";
+                    } else if (res.data.orderStatus == 3) {
+                        document.getElementById("modify_btn").style.display = "";
+                        document.getElementById("assign_btn").style.display = "";
+                    } else if (res.data.orderStatus == 4) {
+                        document.getElementById("modify_btn").style.display = "none";
+                        document.getElementById("assign_btn").style.display = "none";
+                        document.getElementById("workorders_deal").style.display = "none";
+                        document.getElementById("info_deal").style.display = "none";
+                        document.getElementById("dateTime").style.display = "";
+                    } else if (res.data.orderStatus == 5) {
+                        document.getElementById("modify_btn").style.display = "none";
+                        document.getElementById("assign_btn").style.display = "none";
+                        document.getElementById("workorders_deal").style.display = "none";
+                        document.getElementById("info_deal").style.display = "none";
+                    } else if (res.data.orderStatus == 6) {
+                        document.getElementById("modify_btn").style.display = "none";
+                        document.getElementById("assign_btn").style.display = "";
+                        document.getElementById("workorders_deal").style.display = "";
+                        document.getElementById("info_deal").style.display = "";
+                        document.getElementById("dateTime").style.display = "";
+                        document.getElementById("end").style.display = "";
                     }
                 },
                 error: function (res) {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>退回修改</title>
+    <title>部门拒绝</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -20,9 +20,9 @@
 <body>
 <form class="layui-form layui-form-pane" action="">
     <div class="layui-form-item layui-form-text" style="position: absolute;width: 400px;top: 20px;">
-        <label class="layui-form-label"><span>退回修改原因</span></label>
+        <label class="layui-form-label"><span>部门拒绝原因</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" id="modifyContent" style="height: 125px"></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" id="refuseContent" style="height: 125px"></textarea>
         </div>
     </div>
     <button class="layui-btn layui-btn-danger" data-type="reload" type="button" onclick="subForm()"
@@ -34,15 +34,15 @@
 </form>
 <script>
     function subForm() {
-        var modifyContent = document.getElementById("modifyContent").value;
+        var refuseContent = document.getElementById("refuseContent").value;
         var str = location.search;
         var id = str.split('?')[1].split('=')[1];
-        if (modifyContent != null && modifyContent != "") {
+        if (refuseContent != null && refuseContent != "") {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/workorders/update_modify.do",
+                url: "http://localhost:8080/workorders/refuse.do",
                 data: {
-                    modifyContent: document.getElementById("modifyContent").value,
+                    refuseContent: document.getElementById("refuseContent").value,
                     id: id
                 },
                 xhrFields: {

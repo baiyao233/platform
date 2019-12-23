@@ -4,6 +4,7 @@ import com.example.platform.common.Const;
 import com.example.platform.common.ServerResponse;
 import com.example.platform.pojo.User;
 import com.example.platform.pojo.Workorders;
+import com.example.platform.service.IBaseInfoService;
 import com.example.platform.service.IWorkordersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpSession;
 public class WorkordersController {
     @Autowired
     private IWorkordersService iWorkordersService;
+    @Autowired
+    private IBaseInfoService iBaseInfoService;
 
     /**
      * 创建工单
@@ -90,5 +93,38 @@ public class WorkordersController {
     @RequestMapping(value = "assign.do", method = RequestMethod.POST)
     public ServerResponse assign(Workorders workorders) {
         return iWorkordersService.assign(workorders);
+    }
+
+    /**
+     * 部门签收
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "sign.do", method = RequestMethod.POST)
+    public ServerResponse sign(Workorders workorders) {
+        return iWorkordersService.sign(workorders);
+    }
+
+    /**
+     * 部门拒绝
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "refuse.do", method = RequestMethod.POST)
+    public ServerResponse refuse(Workorders workorders) {
+        return iWorkordersService.refuse(workorders);
+    }
+
+    /**
+     * 部门答复
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "result.do", method = RequestMethod.POST)
+    public ServerResponse result(Workorders workorders) {
+        return iWorkordersService.result(workorders);
     }
 }

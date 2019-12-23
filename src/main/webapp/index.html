@@ -80,14 +80,12 @@
     </div>
     <ul class="layui-nav left fast-add" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;">+新增</a>
+            <a href="javascript:;">+查询</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
-                <a onclick="xadmin.add_tab('在tab打开','./page/member/member-list.html')">
-                    <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开刷新','./page/member/member-del.html',true)">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
+                <a onclick="xadmin.add_tab('本人工单查询','./page/order/order-list3.html',true)">
+                    <i class="iconfont">&#xe6b8;</i>工单查询</a>
+                </dd>
             </dl>
         </li>
     </ul>
@@ -142,7 +140,12 @@
                         </a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('订单列表','./page/order/order-list.html')">
+                        <a onclick="xadmin.add_tab('工单查询','./page/order/order-list.html')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>工单查询</cite></a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('工单查询','./page/order/order-list2.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>工单查询</cite></a>
                     </li>
@@ -178,6 +181,19 @@
                                 <a onclick="xadmin.add_tab('角色列表','./page/role/role-list.html')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>角色列表</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont">&#xe70b;</i>
+                            <cite>变量管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('变量列表','./page/baseInfo/baseInfo-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>变量列表</cite></a>
                             </li>
                         </ul>
                     </li>
