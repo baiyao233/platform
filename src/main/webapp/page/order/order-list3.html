@@ -238,6 +238,8 @@
                                 return "<span style=\"color:#c00;\">退回修改</span>";
                             } else if (res.orderStatus == 6) {
                                 return "<span style=\"color:#BA55D3;\">部门答复</span>";
+                            } else if (res.orderStatus == 7) {
+                                return "<span style=\"color:#000000;\">送结案</span>";
                             }
                         }
                     }
@@ -259,7 +261,7 @@
             var id = obj.data.id;
             var url = "";
             if (event == 'deal') {
-                url = "order-deal.html?id=" + id;
+                url = "order-selfDeal.html?id=" + id;
                 open(url);
             }
         });

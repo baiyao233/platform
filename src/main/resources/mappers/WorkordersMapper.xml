@@ -211,14 +211,46 @@
         </set>
         where id = #{id}
     </update>
-    <update id="settle" parameterType="map">
+    <update id="toClose" parameterType="map">
         update platform_workorders
         <set>
-            <if test="resultContent != null">
-                result_content = #{resultContent},
-            </if>
             <if test="orderStatus != null">
                 order_status = #{orderStatus},
+            </if>
+            last_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="close" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            last_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="audit" parameterType="map">
+        update platform_workorders
+        <set>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            <if test="appealType != null">
+                appeal_type = #{appealType},
+            </if>
+            <if test="organId != null">
+                organ_id = #{organId},
+            </if>
+            <if test="organName != null">
+                organ_name = #{organName},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="appealContent != null">
+                appeal_content = #{appealContent},
             </if>
             last_time = now()
         </set>

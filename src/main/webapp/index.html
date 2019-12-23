@@ -45,6 +45,13 @@
                     if (role == 1) {
                         $("#member").show();
                         $("#admin").show();
+                        $("#order-list1").show();
+                        $("#order-list2").show();
+                        $("#baseInfo").show();
+                    } else if (role == 2) {
+                        $("#order-list1").show();
+                    } else if (role == 3) {
+                        $("#order-list2").show();
                     }
                 } else {
                     $(location).attr('href', './login.html');
@@ -127,7 +134,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li id="order">
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="工单管理">&#xe723;</i>
                     <cite>工单管理</cite>
@@ -139,12 +146,12 @@
                             <cite>新增工单</cite></a>
                         </a>
                     </li>
-                    <li>
+                    <li id="order-list1" style="display:none;">
                         <a onclick="xadmin.add_tab('工单查询','./page/order/order-list.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>工单查询</cite></a>
                     </li>
-                    <li>
+                    <li id="order-list2" style="display:none;">
                         <a onclick="xadmin.add_tab('工单查询','./page/order/order-list2.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>工单查询</cite></a>
@@ -152,7 +159,7 @@
                 </ul>
             </li>
 
-            <li>
+            <li id="baseInfo" style="display: none">
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe699;</i>
                     <cite>变量配置</cite>

@@ -30,4 +30,10 @@ public interface WorkordersMapper {
     int refuse(Workorders workorders);
 
     int result(Workorders workorders);
+
+    int toClose(Workorders workorders);
+
+    int close(Workorders workorders);
+
+    int audit(Workorders workorders);
 }

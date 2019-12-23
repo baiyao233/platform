@@ -28,6 +28,12 @@ public interface IWorkordersService {
 
     ServerResponse result(Workorders workorders);
 
+    ServerResponse toClose(Workorders workorders);
+
+    ServerResponse close(Workorders workorders);
+
+    ServerResponse audit(Workorders workorders);
+
     ServerResponse checkValid(String str, String type);
 
 }

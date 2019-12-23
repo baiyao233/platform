@@ -127,4 +127,37 @@ public class WorkordersController {
     public ServerResponse result(Workorders workorders) {
         return iWorkordersService.result(workorders);
     }
+
+    /**
+     * 送结案
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "to_close.do", method = RequestMethod.POST)
+    public ServerResponse toClose(Workorders workorders) {
+        return iWorkordersService.toClose(workorders);
+    }
+
+    /**
+     * 结案
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "close.do", method = RequestMethod.POST)
+    public ServerResponse close(Workorders workorders) {
+        return iWorkordersService.close(workorders);
+    }
+
+    /**
+     * 送审核
+     *
+     * @param workorders
+     * @return
+     */
+    @RequestMapping(value = "audit.do", method = RequestMethod.POST)
+    public ServerResponse audit(Workorders workorders) {
+        return iWorkordersService.audit(workorders);
+    }
 }

@@ -105,6 +105,7 @@
                     var signCount = 0;
                     var endCount = 0;
                     var resultCount = 0;
+                    var toCloseCount = 0;
                     for (var i = 0; i < res.count; i++) {
                         if (res.data.list[i].orderStatus == 5) {
                             modifyCount++;
@@ -120,6 +121,8 @@
                             endCount++;
                         } else if (res.data.list[i].orderStatus == 6) {
                             resultCount++;
+                        } else if (res.data.list[i].orderStatus == 7) {
+                            toCloseCount++;
                         }
                     }
                     document.getElementById("modifyCount").innerText = modifyCount;
@@ -129,6 +132,7 @@
                     document.getElementById("signCount").innerText = signCount;
                     document.getElementById("endCount").innerText = endCount;
                     document.getElementById("resultCount").innerText = resultCount;
+                    document.getElementById("toCloseCount").innerText = toCloseCount;
                 } else {
                     alert(res.msg);
                 }
@@ -223,6 +227,13 @@
                                 <h3>已结案工单</h3>
                                 <p>
                                     <cite id="endCount">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a class="x-admin-backlog-body" href="#">
+                                <h3>送结案工单</h3>
+                                <p>
+                                    <cite id="toCloseCount">0</cite></p>
                             </a>
                         </li>
                     </ul>

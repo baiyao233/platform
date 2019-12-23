@@ -217,6 +217,60 @@ public class WorkodersServiceImpl implements IWorkordersService {
     }
 
     /**
+     * 送结案
+     *
+     * @param workorders
+     * @return
+     */
+    @Override
+    public ServerResponse toClose(Workorders workorders) {
+        ServerResponse serverResponse = this.insertWorkordersLog(workorders.getId(), "后台审核", "送结案", "");
+        if (!serverResponse.isSuccess()) {
+            return serverResponse;
+        }
+        workorders.setOrderStatus("7");
+        int resultCount = workordersMapper.toClose(workorders);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("送结案成功");
+        }
+        return ServerResponse.createByErrorMessage("送结案失败");
+    }
+
+    @Override
+    public ServerResponse close(Workorders workorders) {
+        ServerResponse serverResponse = this.insertWorkordersLog(workorders.getId(), "诉求人操作", "结案", "");
+        if (!serverResponse.isSuccess()) {
+            return serverResponse;
+        }
+        workorders.setOrderStatus("4");
+        int resultCount = workordersMapper.close(workorders);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("结案成功");
+        }
+        return ServerResponse.createByErrorMessage("结案失败");
+    }
+
+    /**
+     * 送审核
+     *
+     * @param workorders
+     * @return
+     */
+    @Override
+    public ServerResponse audit(Workorders workorders) {
+        ServerResponse serverResponse = this.insertWorkordersLog(workorders.getId(), "诉求人操作", "送审核", "");
+        if (!serverResponse.isSuccess()) {
+            return serverResponse;
+        }
+        workorders.setOrderStatus("0");
+        int resultCount = workordersMapper.audit(workorders);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("送审核成功");
+        }
+        return ServerResponse.createByErrorMessage("送审核失败");
+    }
+
+    /**
      * 查看工单是否重复
      *
      * @param str
