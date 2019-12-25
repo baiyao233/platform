@@ -55,16 +55,11 @@ public class WorkodersServiceImpl implements IWorkordersService {
             orderNo = on.createOrderNo("WZ", "1");//设置工单编号
         }
         Date date = new Date();
-        Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        cal.setTime(date);
         workorders.setStartTime(simpleDateFormat.format(date));
         workorders.setOrderNumber(orderNo);
         workorders.setOrderStatus("0");//将工单状态改为0- 待审核
         workorders.setAppealTime(date);//设置诉求时间
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        workorders.setResultTime(cal.getTime());//设置答复时限
-        workorders.setRefuseTime(cal.getTime());//设置拒绝时限
         int resultCount = workordersMapper.insert(workorders);
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("创建工单失败");
