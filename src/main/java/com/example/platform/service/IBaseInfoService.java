@@ -18,9 +18,9 @@ public interface IBaseInfoService {
 
     ServerResponse updateByPrimaryKey(BaseInfo baseInfo);
 
-    ServerResponse<PageInfo> getAllBaseInfo(int pageNum, int pageSize,BaseInfo baseInfo);
+    ServerResponse<PageInfo> getAllBaseInfo(int pageNum, int pageSize, BaseInfo baseInfo);
 
     ServerResponse delBaseInfo(int id);
 
-    ServerResponse checkValid(String str, String type);
+    ServerResponse checkValid(String type, String code);
 }

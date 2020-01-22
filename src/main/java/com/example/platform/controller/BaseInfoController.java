@@ -55,7 +55,7 @@ public class BaseInfoController {
      */
     @RequestMapping(value = "get_all.do", method = RequestMethod.POST)
     public ServerResponse<PageInfo> getAllBaseInfo(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                   @RequestParam(value = "pageSize", defaultValue = "10000") int pageSize,
                                                    BaseInfo baseInfo) {
         return iBaseInfoService.getAllBaseInfo(pageNum, pageSize, baseInfo);
     }

@@ -120,12 +120,12 @@ public class WorkodersServiceImpl implements IWorkordersService {
      */
     @Override
     public ServerResponse updateModify(int id, String modifyContent) {
+        ServerResponse serverResponse = this.insertWorkordersLog(id, "后台审核", "退回修改", modifyContent);
+        if (!serverResponse.isSuccess()) {
+            return serverResponse;
+        }
         int resultCount = workordersMapper.updateModify(id, "5", modifyContent, new Date());
         if (resultCount > 0) {
-            ServerResponse serverResponse = this.insertWorkordersLog(id, "后台审核", "退回修改", modifyContent);
-            if (!serverResponse.isSuccess()) {
-                return serverResponse;
-            }
             return ServerResponse.createBySuccessMessage("退回修改成功");
         }
         return ServerResponse.createByErrorMessage("退回修改失败");

@@ -17,6 +17,7 @@ public class Const {
     public static final String ROLE_CODE = "roleCode";
     public static final String ORDER_NUMBER = "orderNumber";
     public static final String BASEINFO_TYPE = "baseInfo_type";
+    public static final String BASEINFO_CODE = "baseInfo_code";
 
     public interface Role {
         /**

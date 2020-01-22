@@ -57,12 +57,12 @@ public class UserController {
      * @param userCode
      * @param idNumber
      * @param phone
-     * @param newPassword
+     * @param password
      * @return
      */
     @RequestMapping(value = "update_password.do", method = RequestMethod.POST)
-    public ServerResponse<User> updatePassword(String userCode, String idNumber, String phone, String newPassword) {
-        return iUserService.updatePassword(userCode, idNumber, phone, newPassword);
+    public ServerResponse<User> updatePassword(String userCode, String idNumber, String phone, String password,String oldPassword) {
+        return iUserService.updatePassword(userCode, idNumber, phone, password,oldPassword);
     }
 
     /**

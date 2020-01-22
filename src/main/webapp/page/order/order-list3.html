@@ -47,12 +47,8 @@
             </label>
             <div class="layui-input-inline">
                 <div class="layui-input-inline">
-                    <select name="appealType" id="appealType">
-                        <option value="">请选择</option>
-                        <option value="建议">建议</option>
-                        <option value="求助">求助</option>
-                        <option value="表扬">表扬</option>
-                        <option value="举报">举报</option>
+                    <select name="appealType" id="appealType" lay-search="">
+
                     </select>
                 </div>
             </div>
@@ -164,6 +160,35 @@
                 alert("系统错误");
             }
         });
+        jQuery.ajax({
+            type: "POST",
+            url: "http://localhost:8080/baseInfo/get_all.do",
+            data:{
+                baseType: "AppealType"
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                var appealTypeSelect = "<option value=''>请选择</option>\n";
+                for (var i = 0; i < res.count; i++) {
+                    if (i < 2) {
+                        appealTypeSelect += "<option value='" + res.data.list[i].baseName + "'>" + res.data.list[i].baseName + "</option>\n";
+                    } else {
+                        if (res.data.list[i].baseName != res.data.list[i - 1].baseName) {
+                            appealTypeSelect += "<option value='" + res.data.list[i].baseName + "'>" + res.data.list[i].baseName + "</option>\n";
+                        }
+                    }
+                }
+                document.getElementById("appealType").innerHTML = appealTypeSelect;
+                layui.form.render();//重新渲染
+            }
+        });
+
         table.render({
             elem: '#test'
             , url: "http://localhost:8080/workorders/select_workorders.do"

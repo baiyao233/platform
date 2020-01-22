@@ -34,8 +34,8 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
      */
     @Override
     public ServerResponse insert(BaseInfo baseInfo) {
-        ServerResponse serverResponse = this.checkValid(baseInfo.getBaseType(), Const.BASEINFO_TYPE);
-        if (!serverResponse.isSuccess()) {
+        ServerResponse serverResponse = this.checkValid(baseInfo.getBaseCode(), baseInfo.getBaseType());
+        if (!serverResponse.isSuccess()){
             return serverResponse;
         }
         int resultCount = baseInfoMapper.insert(baseInfo);
@@ -93,13 +93,14 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 根据id删除变量
+     *
      * @param id
      * @return
      */
     @Override
     public ServerResponse delBaseInfo(int id) {
         int resultCount = baseInfoMapper.deleteByPrimaryKey(id);
-        if (resultCount > 0){
+        if (resultCount > 0) {
             return ServerResponse.createBySuccessMessage("删除变量成功");
         }
         return ServerResponse.createByErrorMessage("删除失败");
@@ -108,22 +109,16 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
     /**
      * 校验变量
      *
-     * @param str
      * @param type
+     * @param code
      * @return
      */
     @Override
-    public ServerResponse checkValid(String str, String type) {
-        if (StringUtils.isNotBlank(type)) {
-            if (Const.BASEINFO_TYPE.equals(type)) {
-                int resultCount = baseInfoMapper.checkBaseInfoType(str);
-                if (resultCount > 0) {
-                    return ServerResponse.createByErrorMessage("该变量已存在");
-                }
-            }
-        } else {
-            return ServerResponse.createByErrorMessage("参数错误");
+    public ServerResponse checkValid(String code, String type) {
+        int resultCount = baseInfoMapper.checkBaseInfoTypeAndCode(type, code);
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("该变量已存在");
         }
-        return ServerResponse.createBySuccessMessage("校验成功");
+        return ServerResponse.createBySuccessMessage("校验成功,变量不存在");
     }
 }

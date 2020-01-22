@@ -87,10 +87,11 @@
         from platform_base_info
         where base_type = #{baseType}
     </select>
-    <select id="checkBaseInfoType" parameterType="java.lang.String" resultType="int">
+    <select id="checkBaseInfoTypeAndCode" parameterType="java.lang.String" resultType="int">
     select count(1)
     from platform_base_info
     where base_type = #{baseType}
+    and base_code = #{baseCode}
   </select>
     <select id="getAllBaseInfo" resultMap="BaseResultMap">
         select

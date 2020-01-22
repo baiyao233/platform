@@ -54,7 +54,7 @@
                 变量类型
             </label>
             <div class="layui-input-inline">
-                <select id="baseType" name="baseType"></select>
+                <select id="baseType" name="baseType" lay-search=""></select>
             </div>
 
         </div>
@@ -238,9 +238,14 @@
                 success: function (res) {
                     var roleSelect = "<option value=''>请选择</option>\n";
                     for (var i = 0; i < res.count; i++) {
-                        roleSelect += "<option value='" + res.data.list[i].baseType + "'>" + res.data.list[i].baseType + "</option>\n";
+                        if (i < 2) {
+                            roleSelect += "<option value='" + res.data.list[i].baseType + "'>" + res.data.list[i].baseType + "</option>\n";
+                        } else {
+                            if (res.data.list[i].baseType != res.data.list[i - 1].baseType) {
+                                roleSelect += "<option value='" + res.data.list[i].baseType + "'>" + res.data.list[i].baseType + "</option>\n";
+                            }
+                        }
                     }
-                    //console.log(roleSelect);
                     document.getElementById("baseType").innerHTML = roleSelect;
                     layui.form.render();//重新渲染
                 }

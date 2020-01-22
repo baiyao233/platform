@@ -17,7 +17,7 @@ public interface IUserService {
 
     ServerResponse<User> login(String userCode, String password);
 
-    ServerResponse<User> updatePassword(String userCode, String idNumber, String phone, String newPassword);
+    ServerResponse<User> updatePassword(String userCode, String idNumber, String phone, String newPassword,String oldPassword);
 
     ServerResponse<User> getUserCodeInfo(String userCode);
 
