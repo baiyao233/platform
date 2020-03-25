@@ -34,6 +34,13 @@ public interface IWorkordersService {
 
     ServerResponse audit(Workorders workorders);
 
+    ServerResponse orderStatusData();
+
+    ServerResponse organData();
+
+    ServerResponse dayData();
+
     ServerResponse checkValid(String str, String type);
 
+    ServerResponse printOrder(int id);
 }

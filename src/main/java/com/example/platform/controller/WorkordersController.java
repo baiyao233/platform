@@ -1,15 +1,20 @@
 package com.example.platform.controller;
 
+import cn.afterturn.easypoi.word.WordExportUtil;
 import com.example.platform.common.Const;
 import com.example.platform.common.ServerResponse;
 import com.example.platform.pojo.User;
 import com.example.platform.pojo.Workorders;
 import com.example.platform.service.IBaseInfoService;
 import com.example.platform.service.IWorkordersService;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -159,5 +164,47 @@ public class WorkordersController {
     @RequestMapping(value = "audit.do", method = RequestMethod.POST)
     public ServerResponse audit(Workorders workorders) {
         return iWorkordersService.audit(workorders);
+    }
+
+    /**
+     * 工单状态分析
+     *
+     * @return
+     */
+    @RequestMapping(value = "order_status_data.do", method = RequestMethod.POST)
+    public ServerResponse orderStatusData() {
+        return iWorkordersService.orderStatusData();
+    }
+
+    /**
+     * 各部门办件数统计
+     *
+     * @return
+     */
+    @RequestMapping(value = "organ_data.do", method = RequestMethod.POST)
+    public ServerResponse organData() {
+        return iWorkordersService.organData();
+    }
+
+    /**
+     * 日工单总量统计
+     *
+     * @return
+     */
+    @RequestMapping(value = "day_data.do", method = RequestMethod.POST)
+    public ServerResponse dayData() {
+        return iWorkordersService.dayData();
+    }
+
+    /**
+     * 打印工单
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "print_order.do", method = RequestMethod.POST)
+    public ServerResponse printOrder(int id) {
+
+        return iWorkordersService.printOrder(id);
     }
 }

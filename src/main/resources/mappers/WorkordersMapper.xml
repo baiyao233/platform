@@ -256,4 +256,44 @@
         </set>
         where id = #{id}
     </update>
+    <select id="allWorkorders" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from platform_workorders
+    </select>
+
+
+    <select id="getCountOfType" resultType="hashmap" parameterType="map">
+        select pbi.base_name as name ,count(pw.order_status) as value
+        from platform_base_info pbi
+        left join platform_workorders pw
+        on pw.order_status = pbi.base_code
+        where pbi.base_type = 'OrderStatus'
+        group by
+	        pbi.base_name
+    </select>
+
+    <select id="getOrganData" resultType="hashmap" parameterType="map">
+        select 	po.organ_name as name,count(pw.organ_id) as value
+        from platform_organ po
+        left join platform_workorders pw
+        on po.id = pw.organ_id
+        where length(po.id) = 5
+        and length(po.parent_id) =3
+        group by
+	        po.organ_name
+    </select>
+    <select id="getDayData" resultType="hashmap" parameterType="map">
+        select concat(year(pw.appeal_time),"-",
+        month(pw.appeal_time),"-",
+        day(pw.appeal_time)) 'name',
+        count(*) 'value'
+        from platform_workorders pw
+        group by year(pw.appeal_time),
+        month(pw.appeal_time),
+        day(pw.appeal_time)
+        order by pw.appeal_time
+        desc
+        limit 0,7
+    </select>
 </mapper>

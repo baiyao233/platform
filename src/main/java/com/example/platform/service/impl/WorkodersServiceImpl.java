@@ -1,26 +1,28 @@
 package com.example.platform.service.impl;
 
+import cn.afterturn.easypoi.word.WordExportUtil;
 import com.example.platform.common.Const;
 import com.example.platform.common.ServerResponse;
+import com.example.platform.dao.BaseInfoMapper;
+import com.example.platform.dao.OrganMapper;
 import com.example.platform.dao.WorkordersLogMapper;
 import com.example.platform.dao.WorkordersMapper;
-import com.example.platform.pojo.User;
-import com.example.platform.pojo.Workorders;
-import com.example.platform.pojo.WorkordersLog;
+import com.example.platform.pojo.*;
 import com.example.platform.service.IWorkordersService;
 import com.example.platform.util.DateUtil;
 import com.example.platform.util.OrderNo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,6 +41,8 @@ public class WorkodersServiceImpl implements IWorkordersService {
     private WorkordersLogMapper workordersLogMapper;
     @Autowired
     private OrderNo on;
+    @Autowired
+    private OrganMapper organMapper;
 
     /**
      * 创建工单
@@ -266,6 +270,48 @@ public class WorkodersServiceImpl implements IWorkordersService {
     }
 
     /**
+     * 工单状态数据分析
+     *
+     * @return
+     */
+    @Override
+    public ServerResponse orderStatusData() {
+        List<HashMap> list = workordersMapper.getCountOfType();
+        if (list == null) {
+            return ServerResponse.createByErrorMessage("获取数据失败");
+        }
+        return ServerResponse.createBySuccess(list);
+    }
+
+    /**
+     * 各部门数据分析
+     *
+     * @return
+     */
+    @Override
+    public ServerResponse organData() {
+        List<HashMap> list = workordersMapper.getOrganData();
+        if (list == null) {
+            return ServerResponse.createByErrorMessage("获取数据失败");
+        }
+        return ServerResponse.createBySuccess(list);
+    }
+
+    /**
+     * 日工单总量统计
+     *
+     * @return
+     */
+    @Override
+    public ServerResponse dayData() {
+        List<HashMap> list = workordersMapper.getDayData();
+        if (list == null) {
+            return ServerResponse.createByErrorMessage("获取数据失败");
+        }
+        return ServerResponse.createBySuccess(list);
+    }
+
+    /**
      * 查看工单是否重复
      *
      * @param str
@@ -287,6 +333,38 @@ public class WorkodersServiceImpl implements IWorkordersService {
         }
         return ServerResponse.createBySuccessMessage("校验成功");
     }
+
+    /**
+     * 工单打印
+     * @param id
+     * @return
+     */
+    @Override
+    public ServerResponse printOrder(int id) {
+        Workorders workorders = workordersMapper.selectByPrimaryKey(id);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("order_number", workorders.getOrderNumber() == null ? "" : workorders.getOrderNumber());
+        map.put("phone", workorders.getPhone() == null ? "" : workorders.getPhone());
+        map.put("user_name", workorders.getUserName() == null ? "" : workorders.getUserName());
+        map.put("appeal_type", workorders.getAppealType() == null ? "" : workorders.getAppealType());
+        map.put("email", workorders.getEmail() == null ? "" : workorders.getEmail());
+        map.put("id_number", workorders.getIdNumber() == null ? "" : workorders.getIdNumber());
+        map.put("organ_name", workorders.getOrganName() == null ? "" : workorders.getOrganName());
+        map.put("address", workorders.getAddress() == null ? "" : workorders.getAddress());
+        map.put("appeal_content", workorders.getAppealContent() == null ? "" : workorders.getAppealContent());
+        try {
+            XWPFDocument doc = WordExportUtil.exportWord07(
+                    "D:\\IDEAproject\\platform\\src\\main\\java\\com\\example\\platform\\docx\\test.docx", map);
+            FileOutputStream fos = new FileOutputStream("C:\\工单\\" + workorders.getOrderNumber() + ".docx");
+            doc.write(fos);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ServerResponse.createByErrorMessage("打印失败");
+        }
+        return ServerResponse.createBySuccessMessage("打印成功，到C盘工单文件夹下查看");
+    }
+
 
     /**
      * 添加工单流程节点
@@ -317,4 +395,6 @@ public class WorkodersServiceImpl implements IWorkordersService {
         }
         return ServerResponse.createByErrorMessage("工单历史新增失败");
     }
+
+
 }

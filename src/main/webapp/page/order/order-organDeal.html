@@ -49,6 +49,30 @@
         }
     }
 
+    function printOrder() {
+        var str = location.search;
+        var id = str.split('?')[1].split('=')[1];
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/workorders/print_order.do",
+            data: {
+                id: id
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            dataType: "json",
+            success: function (res) {
+                layer.alert(res.msg);
+            },
+            error: function () {
+                layer.alert("系统错误");
+            }
+        });
+
+    }
+
     function sign() {
         var str = location.search;
         if (str != null) {
@@ -116,7 +140,8 @@
             });
         }
     }
-    function btn_status(){
+
+    function btn_status() {
         var resultContent = document.getElementById("resultContent").value;
         var aBtn = document.getElementById("result_btn");
         if (resultContent != "") {
@@ -128,6 +153,9 @@
 <form class="layui-form layui-form-pane" action="" style="margin-left: 200px;margin-top: 30px">
     <input type="hidden" id="userCode">
     <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
+        <button class="layui-btn layui-btn-primary" data-type="reload" type="button" onclick="printOrder()">
+            打印工单
+        </button>
         <button class="layui-btn" data-type="reload" type="button" onclick="sign()" id="sign_btn"
                 style="width: 94px;display: none">
             签收

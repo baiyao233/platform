@@ -12,6 +12,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script src="js/echarts.min.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -75,7 +76,7 @@
                     var username = res.data.userName;
                     document.getElementById("userName").innerText = username;
                 } else {
-                    alert(res.msg);
+                    $(location).attr('href', './login.html');
                 }
             },
             error: function () {
@@ -85,6 +86,7 @@
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/workorders/select_workorders.do",
+            async: false,
             data: {
                 pageNum: 1,
                 pageSize: 100000,
@@ -125,16 +127,16 @@
                             toCloseCount++;
                         }
                     }
-                    document.getElementById("modifyCount").innerText = modifyCount;
-                    document.getElementById("auditCount").innerText = auditCount;
-                    document.getElementById("dealCount").innerText = dealCount;
-                    document.getElementById("refuseCount").innerText = refuseCount;
-                    document.getElementById("signCount").innerText = signCount;
-                    document.getElementById("endCount").innerText = endCount;
-                    document.getElementById("resultCount").innerText = resultCount;
-                    document.getElementById("toCloseCount").innerText = toCloseCount;
+                    // document.getElementById("modifyCount").innerText = modifyCount;
+                    // document.getElementById("auditCount").innerText = auditCount;
+                    // document.getElementById("dealCount").innerText = dealCount;
+                    // document.getElementById("refuseCount").innerText = refuseCount;
+                    // document.getElementById("signCount").innerText = signCount;
+                    // document.getElementById("endCount").innerText = endCount;
+                    // document.getElementById("resultCount").innerText = resultCount;
+                    // document.getElementById("toCloseCount").innerText = toCloseCount;
                 } else {
-                    alert(res.msg);
+                    $(location).attr('href', './login.html');
                 }
             },
             error: function () {
@@ -170,83 +172,341 @@
                 </div>
             </div>
         </div>
+        <!--        <div class="layui-col-md12">-->
+        <!--            <div class="layui-card">-->
+        <!--                <div class="layui-card-header">数据统计</div>-->
+        <!--                <div class="layui-card-body ">-->
+        <!--                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"-->
+        <!--                        style="text-align: center">-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" lay-href="www.baidu.com">-->
+        <!--                                <h3>待审核工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="auditCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>退回修改工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="modifyCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>处理中工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="dealCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>部门已答复工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="resultCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+
+        <!--                    </ul>-->
+        <!--                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"-->
+        <!--                        style="text-align: center">-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>部门已拒绝工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="refuseCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>待签收工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="signCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>已结案工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="endCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                        <li class="layui-col-md2 layui-col-xs6">-->
+        <!--                            <a class="x-admin-backlog-body" href="#">-->
+        <!--                                <h3>送结案工单</h3>-->
+        <!--                                <p>-->
+        <!--                                    <cite id="toCloseCount">0</cite></p>-->
+        <!--                            </a>-->
+        <!--                        </li>-->
+        <!--                    </ul>-->
+        <!--                </div>-->
+
+        <!--            </div>-->
+        <!--        </div>-->
+
+    </div>
+    <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">数据统计</div>
-                <div class="layui-card-body ">
-                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"
-                        style="text-align: center">
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" lay-href="www.baidu.com">
-                                <h3>待审核工单</h3>
-                                <p>
-                                    <cite id="auditCount">0</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>退回修改工单</h3>
-                                <p>
-                                    <cite id="modifyCount">0</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>处理中工单</h3>
-                                <p>
-                                    <cite id="dealCount">0</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>部门已答复工单</h3>
-                                <p>
-                                    <cite id="resultCount">0</cite></p>
-                            </a>
-                        </li>
-
-                    </ul>
-                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog"
-                        style="text-align: center">
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>部门已拒绝工单</h3>
-                                <p>
-                                    <cite id="refuseCount">0</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>待签收工单</h3>
-                                <p>
-                                    <cite id="signCount">0</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>已结案工单</h3>
-                                <p>
-                                    <cite id="endCount">0</cite></p>
-                            </a>
-                        </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a class="x-admin-backlog-body" href="#">
-                                <h3>送结案工单</h3>
-                                <p>
-                                    <cite id="toCloseCount">0</cite></p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
+                <div class="layui-card-header">日工单总量统计</div>
+                <div id="day" style="width: 100%;height:400px;"></div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">工单状态统计</div>
+                <div id="main" style="width: 100%;height:400px;"></div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">各部门办件数统计</div>
+                <div id="zzt" style="width: 100%;height:400px;"></div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var modifyCount = 0;
+    var auditCount = 0;
+    var dealCount = 0;
+    var refuseCount = 0;
+    var signCount = 0;
+    var endCount = 0;
+    var resultCount = 0;
+    var toCloseCount = 0;
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/user/get_user_info.do",
+            xhrFields: {
+                withCredentials: true
+            },
 
+            crossDomain: true,
+
+            dataType: "json",
+            success: function (res) {
+                if (res.status == 0) {
+                    var username = res.data.userName;
+                    document.getElementById("userName").innerText = username;
+                } else {
+                    $(location).attr('href', './login.html');
+                }
+            },
+            error: function () {
+                $(location).attr('href', './login.html');
+            }
+        });
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/workorders/order_status_data.do",
+        async: false,
+        xhrFields: {
+            withCredentials: true
+        },
+
+        crossDomain: true,
+
+        dataType: "json",
+        success: function (res) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById("main"));
+            var status = new Array();
+            for (var i = 0; i < res.data.length; i++) {
+                status[i] = res.data[i];
+            }
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    //text: '工单种类统计',
+                    //left: 'center',
+                    top: 20,
+                    textStyle: {}
+                },
+
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+
+                visualMap: {
+                    show: false,
+                    min: 80,
+                    max: 600,
+                    inRange: {
+                        colorLightness: [0, 1]
+                    }
+                },
+                series: [
+                    {
+                        name: '工单种类',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '50%'],
+                        data: status,
+                        legend: {
+                            orient: 'vertical',
+                            // orient 设置布局方式，默认水平布局，可选值：'horizontal'（水平） ¦ 'vertical'（垂直）
+                            orient: 'vertical',
+                            // x 设置水平安放位置，默认全图居中，可选值：'center' ¦ 'left' ¦ 'right' ¦ {number}（x坐标，单位px）
+                            x: 'left',
+                            // y 设置垂直安放位置，默认全图顶端，可选值：'top' ¦ 'bottom' ¦ 'center' ¦ {number}（y坐标，单位px）
+                            y: 'center',
+                            itemWidth: 24,   // 设置图例图形的宽
+                            itemHeight: 18,  // 设置图例图形的高
+                            textStyle: {
+                                color: '#000'  // 图例文字颜色
+                            },
+                            // itemGap设置各个item之间的间隔，单位px，默认为10，横向布局时为水平间隔，纵向布局时为纵向间隔
+                            itemGap: 30,
+                            //backgroundColor: '#eee',  // 设置整个图例区域背景颜色
+                        },
+                        label: {
+                            normal: {
+
+                                textStyle: {}
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {},
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(0, 0, 0, 0)'
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        },
+        error: function (res) {
+            alert("系统错误");
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/workorders/organ_data.do",
+        async: false,
+        xhrFields: {
+            withCredentials: true
+        },
+
+        crossDomain: true,
+
+        dataType: "json",
+        success: function (res) {
+            var organ = new Array();
+            var organ_data = new Array();
+            for (var i = 0; i < res.data.length; i++) {
+                organ[i] = res.data[i].name;
+                organ_data[i] = res.data[i].value;
+            }
+            var myChart = echarts.init(document.getElementById("zzt"));
+            var option = {
+                color: ['#61a0a8'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: organ
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: organ_data,
+                    type: 'bar'
+                }]
+            };
+            myChart.setOption(option);
+        },
+        error: function () {
+            alert("系统错误");
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/workorders/day_data.do",
+        async: false,
+        xhrFields: {
+            withCredentials: true
+        },
+
+        crossDomain: true,
+
+        dataType: "json",
+        success: function (res) {
+            var myChart = echarts.init(document.getElementById("day"));
+            var value = new Array();
+            var name = new Array();
+            for (var i = 0; i < res.data.length; i++) {
+                name[i] = res.data[i].name;
+                value[i] = res.data[i].value;
+            }
+            var option = {
+                color: ['#61a0a8'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: name.sort(sequence),
+                    lineStyle: {
+                        type: 'solid',
+                        color: '#fff',//左边线的颜色
+                        width: '4'//坐标线的宽度
+                    }
+
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: value,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+            myChart.setOption(option);
+        },
+        error: function () {
+            alert("系统错误");
+        }
+    });
+
+    function sequence(a, b) {
+        if (a > b) {
+            return 1;
+        } else if (a < b) {
+            return -1
+        } else {
+            return 0;
+        }
+    }
+</script>
 <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
         var s = document.getElementsByTagName("script")[0];

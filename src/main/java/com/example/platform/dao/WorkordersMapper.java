@@ -5,7 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface WorkordersMapper {
@@ -36,4 +38,12 @@ public interface WorkordersMapper {
     int close(Workorders workorders);
 
     int audit(Workorders workorders);
+
+    List<Workorders> allWorkorders();
+
+    List<HashMap> getCountOfType();
+
+    List<HashMap> getOrganData();
+
+    List<HashMap> getDayData();
 }

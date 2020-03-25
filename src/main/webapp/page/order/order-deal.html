@@ -56,6 +56,30 @@
         xadmin.open("退回修改", url, 400, 300);
     }
 
+    function printOrder() {
+        var str = location.search;
+        var id = str.split('?')[1].split('=')[1];
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/workorders/print_order.do",
+            data: {
+                id: id
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            dataType: "json",
+            success: function (res) {
+                layer.alert(res.msg);
+            },
+            error: function () {
+                layer.alert("系统错误");
+            }
+        });
+
+    }
+
     function assign() {
         var str = location.search;
         if (str != null) {
@@ -135,7 +159,11 @@
 </script>
 <form class="layui-form layui-form-pane" action="" style="margin-left: 200px;margin-top: 30px">
     <input type="hidden" id="userCode">
+
     <div class="layui-form-item" style="margin-left: 100px;margin-top: 10px">
+        <button class="layui-btn layui-btn-primary" data-type="reload" type="button" onclick="printOrder()">
+            打印工单
+        </button>
         <button class="layui-btn layui-btn-danger" data-type="reload" type="button" onclick="modify()" id="modify_btn">
             退回修改
         </button>
