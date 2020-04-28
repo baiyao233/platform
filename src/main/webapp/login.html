@@ -117,8 +117,8 @@
                         alert(res.msg);
                     }
                 },
-                error: function () {
-                    $(location).attr('href', './error.html');
+                error: function (res) {
+                    alert(res.msg);
                 }
             });
         }

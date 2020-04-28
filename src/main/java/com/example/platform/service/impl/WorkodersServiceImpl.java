@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -341,6 +342,7 @@ public class WorkodersServiceImpl implements IWorkordersService {
      */
     @Override
     public ServerResponse printOrder(int id) {
+        String fileGoalUrl="D:/orders/";//打印文件输出位置
         Workorders workorders = workordersMapper.selectByPrimaryKey(id);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("order_number", workorders.getOrderNumber() == null ? "" : workorders.getOrderNumber());
@@ -354,15 +356,19 @@ public class WorkodersServiceImpl implements IWorkordersService {
         map.put("appeal_content", workorders.getAppealContent() == null ? "" : workorders.getAppealContent());
         try {
             XWPFDocument doc = WordExportUtil.exportWord07(
-                    "D:\\IDEAproject\\platform\\src\\main\\java\\com\\example\\platform\\docx\\test.docx", map);
-            FileOutputStream fos = new FileOutputStream("C:\\工单\\" + workorders.getOrderNumber() + ".docx");
+                    "src/main/java/com/example/platform/docx/test.docx", map);
+            File savefile = new File(fileGoalUrl);
+            if (!savefile.exists()){
+                savefile.mkdirs();
+            }
+            FileOutputStream fos = new FileOutputStream(fileGoalUrl + workorders.getOrderNumber() + ".docx");
             doc.write(fos);
             fos.close();
         } catch (Exception e) {
             e.printStackTrace();
             return ServerResponse.createByErrorMessage("打印失败");
         }
-        return ServerResponse.createBySuccessMessage("打印成功，到C盘工单文件夹下查看");
+        return ServerResponse.createBySuccessMessage("打印成功，到D盘orders文件夹下查看");
     }
 
 

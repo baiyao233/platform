@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,22 +35,32 @@ public class UserController {
         return iUserService.register(user);
     }
 
+
     /**
      * 登录
-     *
-     * @param session
      * @param userCode
      * @param password
+     * @param session
      * @return
      */
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
-    public ServerResponse login(HttpSession session, String userCode, String password) {
+    public ServerResponse login(HttpSession session,String userCode, String password) {
         ServerResponse<User> serverResponse = iUserService.login(userCode, password);
         if (serverResponse.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, serverResponse.getData());
         }
         return serverResponse;
     }
+//    @RequestMapping(value = "login.do", method = RequestMethod.POST)
+//    public ServerResponse login(@RequestBody Map<String,String> allMap, HttpSession session) {
+//        String userCode = allMap.get("userCode");
+//        String password = allMap.get("password");
+//        ServerResponse<User> serverResponse = iUserService.login(userCode,password);
+//        if (serverResponse.isSuccess()) {
+//            session.setAttribute(Const.CURRENT_USER, serverResponse.getData());
+//        }
+//        return serverResponse;
+//    }
 
     /**
      * 修改密码

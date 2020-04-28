@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2020-01-22 13:46:09
+Date: 2020-04-08 16:29:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `platform_base_info` (
 -- ----------------------------
 -- Records of platform_base_info
 -- ----------------------------
-INSERT INTO `platform_base_info` VALUES ('1', '20191231', '1', 'OrderNoCreateVar');
+INSERT INTO `platform_base_info` VALUES ('1', '20200403', '1', 'OrderNoCreateVar');
 INSERT INTO `platform_base_info` VALUES ('2', '0', '待审核', 'OrderStatus');
 INSERT INTO `platform_base_info` VALUES ('3', '1', '待签收', 'OrderStatus');
 INSERT INTO `platform_base_info` VALUES ('4', '2', '处理中', 'OrderStatus');
@@ -65,15 +65,18 @@ CREATE TABLE `platform_organ` (
 -- ----------------------------
 -- Records of platform_organ
 -- ----------------------------
-INSERT INTO `platform_organ` VALUES ('1', '工业园区', '0', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('10', '街道', '1', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('20', '社工委', '1', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('101', '斜塘街道', '10', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('102', '娄葑街道', '10', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('103', '唯亭街道', '10', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('201', '湖西社工委', '20', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('202', '湖东社工委', '20', null, null, null, null, null);
-INSERT INTO `platform_organ` VALUES ('10101', '莲花社区', '101', null, null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('1', '工业园区', '0', '0', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('101', '街道', '1', '1', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('102', '社工委', '1', '1', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('103', '联动中心', '1', '1', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10101', '斜塘街道', '101', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10102', '唯亭街道', '101', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10103', '胜浦街道', '101', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10104', '娄葑街道', '101', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10201', '湖西社工委', '102', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10202', '湖东社工委', '102', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10203', '东沙湖社工委', '102', '2', null, null, null, null);
+INSERT INTO `platform_organ` VALUES ('10204', '月亮湾社工委', '102', '2', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for platform_role
@@ -123,13 +126,13 @@ CREATE TABLE `platform_user` (
   `reserved4` varchar(255) DEFAULT NULL COMMENT '预留字段4',
   `reserved5` varchar(255) DEFAULT NULL COMMENT '预留字段5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of platform_user
 -- ----------------------------
-INSERT INTO `platform_user` VALUES ('1', 'hfp', '黄飞鹏', 'D81BC281FBC7FA6AB0600151586D24BD', 'hfp@123.com', '12345', '12345', '1', '1', '101', '斜塘街道', '2019-12-26 14:04:07', '2019-12-26 14:04:07', null, null, null, null, null);
-INSERT INTO `platform_user` VALUES ('2', 'ljj', '梁俊杰', '09EEB592558D88F372F4AEC8DA4B4637', 'ljj@123.com', '12345', '12345', '1', '0', null, null, '2019-11-01 22:35:40', '2019-11-01 22:35:40', null, null, null, null, null);
+INSERT INTO `platform_user` VALUES ('1', 'hfp', '黄飞鹏', 'D81BC281FBC7FA6AB0600151586D24BD', 'hfp@123.com', '12345', '12345', '1', '1', '10101', '斜塘街道', '2019-12-26 14:04:07', '2019-12-26 14:04:07', null, null, null, null, null);
+INSERT INTO `platform_user` VALUES ('2', 'ljj', '梁俊杰', '09EEB592558D88F372F4AEC8DA4B4637', 'ljj@123.com', '12345', '12345', '1', '4', '103', '联动中心', '2019-11-01 22:35:40', '2019-11-01 22:35:40', null, null, null, null, null);
 INSERT INTO `platform_user` VALUES ('3', 'wbx', 'baiyao', '09EEB592558D88F372F4AEC8DA4B4637', '1272764421@qq.com', '17605240157', '12345', '1', '3', null, null, '2019-11-01 22:35:42', '2019-11-01 22:35:42', null, null, null, null, null);
 INSERT INTO `platform_user` VALUES ('4', 'jitui', 'jitui2333', 'D8F80B67499E434EA61ADAF6E6219BF2', 'jitui@123.com', '13812222222', '123456', '0', '3', null, null, '2019-12-06 14:57:56', '2019-12-06 14:57:56', null, null, null, null, null);
 INSERT INTO `platform_user` VALUES ('5', 'bjc', 'bjcbjc', 'D8F80B67499E434EA61ADAF6E6219BF2', 'bjc@123.com', '11122223333', '11122223333', '1', '3', null, null, '2019-12-16 16:32:04', '2019-12-16 16:32:04', null, null, null, null, null);
@@ -139,7 +142,6 @@ INSERT INTO `platform_user` VALUES ('8', 'qyd2', '益达2222', 'D8F80B67499E434E
 INSERT INTO `platform_user` VALUES ('9', 'qyd3', 'qyd3h', 'D8F80B67499E434EA61ADAF6E6219BF2', 'qyd3@123.com', '12321222132', '12321222132', '1', '0', null, null, '2019-11-15 22:52:38', '2019-11-15 22:52:38', null, null, null, null, null);
 INSERT INTO `platform_user` VALUES ('10', 'qyd4', 'qyd4h', 'D8F80B67499E434EA61ADAF6E6219BF2', 'qyd4@123.com', '12334521232', '12334521232', '1', '0', null, null, '2019-12-06 15:10:39', '2019-12-06 15:10:39', null, null, null, null, null);
 INSERT INTO `platform_user` VALUES ('11', 'jituijitui', 'jituijitui', '66E01CC791F37FCC4676B29497A6137C', 'jituij@123.com', '12312354567', '12312354567', '1', '0', null, null, '2019-12-17 16:53:41', '2019-12-17 16:53:41', null, null, null, null, null);
-INSERT INTO `platform_user` VALUES ('12', 'ljj1', '梁俊杰', '09EEB592558D88F372F4AEC8DA4B4637', null, null, null, '1', '0', null, null, '2019-12-17 16:53:44', '2019-12-17 16:53:44', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for platform_user_role
@@ -196,24 +198,28 @@ CREATE TABLE `platform_workorders` (
   `reserved4` varchar(255) DEFAULT NULL COMMENT '预留字段4',
   `reserved5` varchar(255) DEFAULT NULL COMMENT '预留字段5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='工单表';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='工单表';
 
 -- ----------------------------
 -- Records of platform_workorders
 -- ----------------------------
-INSERT INTO `platform_workorders` VALUES ('1', 'WZ2220001201912180001', '5', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-18 16:16:26', '建议', '123213', '123213', '101', '斜塘街道', null, '2019-12-18 16:16:26', null, null, '2019-12-19 16:11:04', '2019-12-26 14:07:20', '123', null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('5', 'WZ2220001201912200001', '4', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 10:48:05', '举报', '位啊无多', '哇哇的哇大', '101', '斜塘街道', '撒大声地', '2019-12-23 10:48:05', '123', '2019-12-22 10:54:02', '2019-12-22 10:53:57', '2019-12-23 14:29:44', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('6', 'WZ2220001201912200002', '2', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-20 14:04:50', '表扬', '实打实打算', '萨达萨达萨达萨达是', '101', '斜塘街道', '阿斯顿萨达', '2019-12-20 14:04:50', null, '2019-12-22 13:54:37', '2019-12-22 13:54:29', '2019-12-20 14:04:50', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('7', 'WZ2220001201912200003', '3', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-20 14:05:55', '举报', '21321321', '12321321321', '101', '斜塘街道', '123213', '2019-12-20 14:05:55', '我打算大撒大撒', '2019-12-23 00:00:00', '2019-12-23 00:00:00', '2019-12-20 14:05:55', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('8', 'WZ2220001201912200004', '7', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 10:55:05', '求助', '123213', '12321321321', '101', '斜塘街道', '其味无穷二群', '2019-12-23 10:55:05', null, '2019-12-23 00:00:00', '2019-12-23 00:00:00', '2019-12-23 13:55:06', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('9', 'WZ2220001201912200005', '6', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 10:54:20', '建议', '213213213', '213213213', '101', '斜塘街道', '745132132', '2019-12-25 00:00:00', null, '2019-12-25 00:00:00', '2019-12-25 00:00:00', '2019-12-23 13:54:53', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('10', 'WZ2220001201912230001', '1', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 09:05:40', '建议', '1wq21wqewq1eqweqw31', '万达哇无大所', '102', '娄葑街道', '1321312312', '2019-12-25 00:00:00', null, '2019-12-25 00:00:00', '2019-12-25 00:00:00', '2019-12-23 13:53:17', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('11', 'WZ2220001201912230002', '5', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 10:24:57', '建议', '山大飒飒大123', '打算的撒大大撒打算打算的幸存者瞎扯下车123123', '101', '斜塘街道', null, '2019-12-24 10:24:57', null, null, '2019-12-24 10:24:57', '2019-12-26 14:13:43', '12323', null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('12', 'WZ2220001201912230003', '1', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 14:03:21', '表扬', '湿哒哒所大所', 'sad撒多撒大所撒大声地', '101', '斜塘街道', '撒大声地撒大', '2019-12-25 00:00:00', null, '2019-12-25 00:00:00', '2019-12-25 00:00:00', '2019-12-23 14:04:02', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('13', 'WZ2220001201912230004', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-23 14:03:35', '举报', '阿斯顿撒多撒d', '阿斯顿撒旦sad阿萨德阿萨德112 3132 sadas', '101', '斜塘街道', null, '2019-12-24 14:03:35', null, null, '2019-12-24 14:03:35', '2019-12-23 14:03:35', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('15', 'WZ2220001201912250001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-25 09:38:34', '建议', 'asdsad', '12312asdas中小城市达大厦', '101', '斜塘街道', null, '2019-12-26 09:38:34', null, null, '2019-12-26 09:38:34', '2019-12-25 09:38:33', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('16', 'WZ2220001201912260001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-26 15:44:00', '表扬', '2123123', '123123123', '101', '斜塘街道', null, null, null, null, null, '2019-12-26 15:44:00', null, null, null, null, null, null);
-INSERT INTO `platform_workorders` VALUES ('17', 'WZ2220001201912310001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2019-12-31 10:26:24', '表扬', '富华科技大厦', '测试测试', '101', '斜塘街道', null, null, null, null, null, '2019-12-31 10:26:23', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('1', 'WZ2220001201912180001', '5', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-18 16:16:26', '建议', '123213', '123213', '10101', '斜塘街道', null, '2019-12-18 16:16:26', null, null, '2019-12-19 16:11:04', '2019-12-26 14:07:20', '123', null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('5', 'WZ2220001201912200001', '4', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-13 10:48:05', '举报', '位啊无多', '哇哇的哇大', '10101', '斜塘街道', '撒大声地', '2019-12-23 10:48:05', '123', '2019-12-22 10:54:02', '2019-12-22 10:53:57', '2019-12-23 14:29:44', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('6', 'WZ2220001201912200002', '2', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-13 14:04:50', '表扬', '实打实打算', '萨达萨达萨达萨达是', '10101', '斜塘街道', '阿斯顿萨达', '2019-12-20 14:04:50', null, '2019-12-22 13:54:37', '2019-12-22 13:54:29', '2019-12-20 14:04:50', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('7', 'WZ2220001201912200003', '3', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-13 14:05:55', '举报', '21321321', '12321321321', '10101', '斜塘街道', '123213', '2019-12-20 14:05:55', '我打算大撒大撒', '2019-12-23 00:00:00', '2019-12-23 00:00:00', '2019-12-20 14:05:55', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('8', 'WZ2220001201912200004', '7', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-14 10:55:05', '求助', '123213', '12321321321', '10101', '斜塘街道', '其味无穷二群', '2019-12-23 10:55:05', null, '2019-12-23 00:00:00', '2019-12-23 00:00:00', '2019-12-23 13:55:06', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('9', 'WZ2220001201912200005', '6', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-14 10:54:20', '建议', '213213213', '213213213', '10101', '斜塘街道', '745132132', '2019-12-25 00:00:00', null, '2019-12-25 00:00:00', '2019-12-25 00:00:00', '2019-12-23 13:54:53', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('10', 'WZ2220001201912230001', '1', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-14 09:05:40', '建议', '1wq21wqewq1eqweqw31', '万达哇无大所', '10104', '娄葑街道', '1321312312', '2019-12-25 00:00:00', null, '2019-12-25 00:00:00', '2019-12-25 00:00:00', '2019-12-23 13:53:17', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('11', 'WZ2220001201912230002', '5', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-15 10:24:57', '建议', '山大飒飒大123', '打算的撒大大撒打算打算的幸存者瞎扯下车123123', '10101', '斜塘街道', null, '2019-12-24 10:24:57', null, null, '2019-12-24 10:24:57', '2019-12-26 14:13:43', '12323', null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('12', 'WZ2220001201912230003', '1', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-16 14:03:21', '表扬', '湿哒哒所大所', 'sad撒多撒大所撒大声地', '10101', '斜塘街道', '撒大声地撒大', '2019-12-25 00:00:00', null, '2019-12-25 00:00:00', '2019-12-25 00:00:00', '2019-12-23 14:04:02', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('13', 'WZ2220001201912230004', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-17 14:03:35', '举报', '阿斯顿撒多撒d', '阿斯顿撒旦sad阿萨德阿萨德112 3132 sadas', '10101', '斜塘街道', null, '2019-12-24 14:03:35', null, null, '2019-12-24 14:03:35', '2019-12-23 14:03:35', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('15', 'WZ2220001201912250001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-17 09:38:34', '建议', 'asdsad', '12312asdas中小城市达大厦', '10101', '斜塘街道', null, '2019-12-26 09:38:34', null, null, '2019-12-26 09:38:34', '2019-12-25 09:38:33', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('16', 'WZ2220001201912260001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-17 15:44:00', '表扬', '2123123', '123123123', '10101', '斜塘街道', null, null, null, null, null, '2019-12-26 15:44:00', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('17', 'WZ2220001201912310001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-18 10:26:24', '表扬', '富华科技大厦', '测试测试', '10101', '斜塘街道', null, null, null, null, null, '2019-12-31 10:26:23', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('18', 'WZ2220001202003190001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-19 11:10:25', '建议', '123123', '123213', '10104', '娄葑街道', null, null, null, null, null, '2020-03-19 11:10:24', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('19', 'WZ2220001202003190002', '1', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-20 11:10:45', '表扬', '123123', '123123', '10204', '月亮湾社工委', '1234567890', '2020-03-21 11:07:34', null, '2020-03-21 11:07:34', '2020-03-21 11:07:34', '2020-03-20 11:07:53', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('20', 'WZ2220001202003200001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-03-20 11:08:37', '求助', '123', '123123', '10103', '胜浦街道', null, null, null, null, null, '2020-03-20 11:08:37', null, null, null, null, null, null);
+INSERT INTO `platform_workorders` VALUES ('21', 'WZ2220001202004030001', '0', 'hfp', '黄飞鹏', '12345', '12345', '1', 'hfp@123.com', '2020-04-03 17:05:59', '建议', '332212', '12312323', '10104', '娄葑街道', null, null, null, null, null, '2020-04-03 17:05:59', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for platform_workorders_log
@@ -225,13 +231,13 @@ CREATE TABLE `platform_workorders_log` (
   `organ_name` varchar(255) DEFAULT NULL COMMENT '处办单位名称',
   `deal_way` varchar(255) DEFAULT NULL COMMENT '处理方式',
   `deal_content` varchar(255) DEFAULT NULL COMMENT '处理意见',
-  `deal_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '处理时间戳',
+  `deal_time` datetime DEFAULT NULL COMMENT '处理时间戳',
   `consume_time` varchar(255) DEFAULT NULL COMMENT '耗费时间',
   `deal_user` varchar(255) DEFAULT NULL COMMENT '处理人账号',
   `workorders_id` int(11) DEFAULT NULL COMMENT '工单id',
   `order_number` varchar(255) DEFAULT NULL COMMENT '工单编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COMMENT='工单历史表';
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8 COMMENT='工单历史表';
 
 -- ----------------------------
 -- Records of platform_workorders_log
@@ -286,3 +292,8 @@ INSERT INTO `platform_workorders_log` VALUES ('98', '诉求人操作', '湖东�
 INSERT INTO `platform_workorders_log` VALUES ('99', '后台审核', '斜塘街道', '退回修改', '12323', '2019-12-26 14:13:44', '10s', 'hfp', '11', 'WZ2220001201912230002');
 INSERT INTO `platform_workorders_log` VALUES ('100', '工单创建', '斜塘街道', '送审核', '', '2019-12-26 15:44:00', '0s', 'hfp', '16', 'WZ2220001201912260001');
 INSERT INTO `platform_workorders_log` VALUES ('101', '工单创建', '斜塘街道', '送审核', '', '2019-12-31 10:26:24', '0s', 'hfp', '17', 'WZ2220001201912310001');
+INSERT INTO `platform_workorders_log` VALUES ('102', '工单创建', '娄葑街道', '送审核', '', '2020-03-19 11:10:25', '0s', 'hfp', '18', 'WZ2220001202003190001');
+INSERT INTO `platform_workorders_log` VALUES ('103', '工单创建', '月亮湾社工委', '送审核', '', '2020-03-19 11:10:45', '0s', 'hfp', '19', 'WZ2220001202003190002');
+INSERT INTO `platform_workorders_log` VALUES ('104', '后台审核', '月亮湾社工委', '交办部门', '1234567890', '2020-03-20 11:07:54', '23h:57m:9s', 'hfp', '19', 'WZ2220001202003190002');
+INSERT INTO `platform_workorders_log` VALUES ('105', '工单创建', '胜浦街道', '送审核', '', '2020-03-20 11:08:37', '0s', 'hfp', '20', 'WZ2220001202003200001');
+INSERT INTO `platform_workorders_log` VALUES ('106', '工单创建', '娄葑街道', '送审核', '', '2020-04-03 17:05:59', '0s', 'hfp', '21', 'WZ2220001202004030001');

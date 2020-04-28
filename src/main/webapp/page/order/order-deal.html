@@ -84,33 +84,42 @@
         var str = location.search;
         if (str != null) {
             var id = str.split('?')[1].split('=')[1];
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/workorders/assign.do",
-                data: {
-                    id: id,
-                    resultContent: document.getElementById("resultContent").value,
-                    resultTime: document.getElementById("resultTime").value,
-                    refuseTime: document.getElementById("refuseTime").value,
-                    signTime: document.getElementById("signTime").value
-                },
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                dataType: "json",
-                success: function (res) {
-                    layer.alert("交办部门成功", {
-                        icon: 6
-                    }, function () {
-                        window.close();
-                    })
-                },
-                error: function (res) {
-                    layer.alert(res.status);
-                }
+            var resultTime = document.getElementById("resultTime").value;
+            var refuseTime = document.getElementById("refuseTime").value;
+            var signTime = document.getElementById("signTime").value;
+            var resultContent = document.getElementById("resultContent").value;
+            if(resultTime != "" && refuseTime != "" && signTime != "" && resultContent != ""){
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/workorders/assign.do",
+                    data: {
+                        id: id,
+                        resultContent: document.getElementById("resultContent").value,
+                        resultTime: document.getElementById("resultTime").value,
+                        refuseTime: document.getElementById("refuseTime").value,
+                        signTime: document.getElementById("signTime").value
+                    },
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    dataType: "json",
+                    success: function (res) {
+                        layer.alert("交办部门成功", {
+                            icon: 6
+                        }, function () {
+                            window.close();
+                        })
+                    },
+                    error: function (res) {
+                        layer.alert(res.status);
+                    }
 
-            });
+                });
+            }else {
+                layer.alert("必填信息没有全部填写");
+            }
+
         }
     }
 
@@ -154,7 +163,6 @@
             aBtn.className = "layui-btn";
             aBtn.disabled = "";
         }
-        console.log(resultTime);
     }
 </script>
 <form class="layui-form layui-form-pane" action="" style="margin-left: 200px;margin-top: 30px">

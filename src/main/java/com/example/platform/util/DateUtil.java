@@ -55,7 +55,7 @@ public class DateUtil {
     }
 
     /**
-     *
+     *  获取当前时间yyyymmdd形式
      * @return
      */
     public static String getDateStringyyyymmdd(){
@@ -63,5 +63,15 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String retStr = sdf.format(date);
         return retStr;
+    }
+
+    /**
+     * 获取当前时间
+     * @return
+     */
+    public static String getNowDate(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return sdf.format(date);
     }
 }
